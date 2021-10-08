@@ -1,9 +1,13 @@
 package com.revature;
 
-import com.revature.BankUser;
-import com.revature.BankAdmin;
-import com.revature.BankEmployee;
-import com.revature.BankCustomer;
+import com.revature.controller.BankUI;
+
+import com.revature.service.BankAdmin;
+import com.revature.service.BankCustomer;
+import com.revature.service.BankEmployee;
+import com.revature.service.BankUser;
+
+import com.revature.dao.BankRecords;
 
 public class Driver {
 	
