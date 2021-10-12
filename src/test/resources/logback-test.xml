@@ -1,5 +1,3 @@
-23 lines (21 sloc)  834 Bytes
-   
 <configuration>
 	<!-- An appender is a particular stream that the logger will print out to. 
 	Here is the console appender ensuring that our logs are printed to the console.  -->
