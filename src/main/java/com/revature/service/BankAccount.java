@@ -2,17 +2,12 @@ package com.revature.service;
 
 public class BankAccount {
 	
-	// bank account operations (parent class to BankUser subclass)
+	// bank account operations (parent class) -- Service Layer
 	
 	// abilities of BankAccount class that subclasses may inherit:
 	// -withdrawing from accounts
 	// -depositing to accounts
 	// -transferring between accounts
-	
-	// abilities of BankAccount class that subclasses may inherit:
-	// -view customer Account information
-	// -view customer Account balances
-	// -view customer Personal information
 	
 	// constructor
 	public BankAccount() {

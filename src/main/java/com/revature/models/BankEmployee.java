@@ -1,4 +1,4 @@
-package com.revature.service;
+package com.revature.models;
 
 public class BankEmployee extends BankAdmin {
 	

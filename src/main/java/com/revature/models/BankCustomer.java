@@ -1,4 +1,6 @@
-package com.revature.service;
+package com.revature.models;
+
+import com.revature.service.BankAccount;
 
 public class BankCustomer extends BankAccount {
 	
