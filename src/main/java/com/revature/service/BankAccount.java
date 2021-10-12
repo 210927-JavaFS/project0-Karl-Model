@@ -80,19 +80,5 @@ public class BankAccount {
 		}
 	}
 
-	// method which enables a user to view customer Account information
-	public void viewCustomerAccountInfo() {
-
-	}
-
-	// method which enables a user to view customer Account balances
-	public void viewCustomerAccountBalance() {
-	
-	}
-
-	// method which enables a user to view customer Personal information
-	public void viewCustomerPersonalInfo() {
-	
-	}
 }
 

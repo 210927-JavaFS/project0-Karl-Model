@@ -36,7 +36,7 @@ public class BankUser {
 	// fields
 
 	   
-	// methods (admin)
+	// methods (admin role unique abilities)
 	
 	// method which enables a user to edit customer Account information
 	public void editCustomerAccountInfo() {
@@ -53,15 +53,20 @@ public class BankUser {
 
 	}
 	
-	// methods (employee)
+	// methods (employee, abilities shared with admin role above and customer role below)
 	
-	// method which enables a user to edit customer Account information
+	// method which enables a user to view customer Account information
 	public void viewCustomerAccountInfo() {
 
 	}
 	
-	// method which enables a user to edit customer Personal information
+	// method which enables a user to view customer Personal information
 	public void viewCustomerPersonalInfo() {
+	
+	}
+	
+	// method which enables a user to view customer Account balances
+	public void viewCustomerAccountBalance() {
 	
 	}
 	
@@ -75,7 +80,7 @@ public class BankUser {
 	
 	}
 	
-	// methods (customer)
+	// methods (customer role unique abilities)
 	
 	// method which enables a user to register with username and password (encrypted)
 	public void registerCustomerAccount() {
