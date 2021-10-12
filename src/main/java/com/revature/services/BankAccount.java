@@ -1,4 +1,4 @@
-package com.revature.service;
+package com.revature.services;
 
 public class BankAccount {
 	

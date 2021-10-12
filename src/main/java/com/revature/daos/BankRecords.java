@@ -1,4 +1,4 @@
-package com.revature.dao;
+package com.revature.daos;
 
 public class BankRecords {
 	
