@@ -10,7 +10,7 @@ public class Driver {
 	private static Logger log = LoggerFactory.getLogger(Driver.class);
 	// end: excerpt from revature demo: HelloLogger
 	
-	public static void Main(String[] args) {
+	public static void main(String[] args) {
 		
 		// start: excerpt from revature demo: HelloLogger
 		

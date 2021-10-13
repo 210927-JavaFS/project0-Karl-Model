@@ -1,0 +1,4 @@
+16:12:06.540 [] [main] DEBUG com.revature.Driver - Fun Times are about to start!
+16:12:06.546 [Tim=1] [main] INFO  com.revature.Driver - This is a really awesome application
+16:12:06.548 [Tim=1] [main] ERROR com.revature.Driver - OH NO! Is something going wrong?
+16:12:06.549 [Tim=1] [main] WARN  com.revature.Driver - Program ending
