@@ -38,7 +38,7 @@ public class BankUserDomicile {
 		super();
 	}
 	
-	// methods
+	// methods: Get and Set
 	
 	public String getName() {
 		return name;
@@ -128,7 +128,7 @@ public class BankUserDomicile {
 		this.approved = approved;
 	}
 	
-	// override for equals and hashcode
+	// override for methods: equals() and hashcode()
 
 	@Override
 	public int hashCode() {
@@ -211,5 +211,16 @@ public class BankUserDomicile {
 			return false;
 		return true;
 	}
+	
+	// override for method: toString()
+
+	@Override
+	public String toString() {
+		return "BankUserDomicile [name=" + name + ", streetNumber=" + streetNumber + ", streetName=" + streetName
+				+ ", city=" + city + ", region=" + region + ", zip=" + zip + ", country=" + country + ", email=" + email
+				+ ", ss=" + ss + ", done=" + done + ", approved=" + approved + "]";
+	}
+	
+	
 	
 }

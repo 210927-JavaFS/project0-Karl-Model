@@ -15,7 +15,9 @@ public class BankUserDomicileController {
 		System.out.println("These are your Residences:");
 		List<BankUserDomicile> list = bankUserDomicileService.findAllResidences();
 		for(BankUserDomicile bankUserDomicile:list) {
-			System.out.println(bankUserDomicile);
+			//System.out.println(bankUserDomicile.getName()); // working
+			System.out.println(bankUserDomicile.toString()); // working
+			//System.out.println(bankUserDomicile); // prints location in memory?
 		}
 	}
 
