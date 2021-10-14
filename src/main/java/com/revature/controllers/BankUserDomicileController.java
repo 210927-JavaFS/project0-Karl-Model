@@ -3,26 +3,26 @@ package com.revature.controllers;
 import java.util.List;
 import java.util.Scanner;
 
-import com.revature.models.BankUserAddress;
-import com.revature.services.BankUserAddressService;
+import com.revature.models.BankUserDomicile;
+import com.revature.services.BankUserDomicileService;
 
-public class BankUserAddressController {
+public class BankUserDomicileController {
 	
-	private BankUserAddressService bankUserAddressService = new BankUserAddressService();
+	private BankUserDomicileService bankUserDomicileService = new BankUserDomicileService();
 	private Scanner scan = new Scanner(System.in);
 	
 	public void displayAllResidences() {
-		System.out.println("These are your Addresses:");
-		List<BankUserAddress> list = bankUserAddressService.findAllResidences();
-		for(BankUserAddress bankUserAddress:list) {
-			System.out.println(bankUserAddress);
+		System.out.println("These are your Residences:");
+		List<BankUserDomicile> list = bankUserDomicileService.findAllResidences();
+		for(BankUserDomicile bankUserDomicile:list) {
+			System.out.println(bankUserDomicile);
 		}
 	}
 
 	public void displayOneResidence(String name) {
-		System.out.println("Here is the Address named: "+name+":");
-		BankUserAddress bankUserAddress = bankUserAddressService.findByName(name);
-		System.out.println(bankUserAddress);
+		System.out.println("Here is the Residence named: "+name+":");
+		BankUserDomicile bankUserDomicile = bankUserDomicileService.findByName(name);
+		System.out.println(bankUserDomicile);
 	}
 	
 	
@@ -32,7 +32,7 @@ public class BankUserAddressController {
 		System.out.println("==================================================");
 		System.out.println("        New Bank Account Application Form");
 		System.out.println("==================================================");
-		System.out.println("         Part One: Residential Address");
+		System.out.println("         Part One: Primary Residence");
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 		System.out.println("What is your apartment or townhouse name (leave blank if not applicable)");
 		String name = scan.nextLine();
@@ -82,12 +82,12 @@ public class BankUserAddressController {
 			System.out.println("unrecognized value set to False");
 			approved = false;
 		}
-		BankUserAddress bankUserAddress = new BankUserAddress(name, number, stName, city, region, zip, country, email, ss, done, approved);
+		BankUserDomicile bankUserDomicile = new BankUserDomicile(name, number, stName, city, region, zip, country, email, ss, done, approved);
 		
-		if(bankUserAddressService.newResidence(bankUserAddress)) {
-			System.out.println("Your Address profile was successfully completed");
+		if(bankUserDomicileService.newResidence(bankUserDomicile)) {
+			System.out.println("Your Primary Residence was successfully submitted");
 		}else {
-			System.out.println("Something went wrong. We could not register your Address. Please try again.");
+			System.out.println("Something went wrong. We could not register your Primary Residence. Please try again.");
 		}
 	}
 	

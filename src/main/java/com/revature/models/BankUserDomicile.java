@@ -1,6 +1,6 @@
 package com.revature.models;
 
-public class BankUserAddress {
+public class BankUserDomicile {
 	
 	// fields
 	
@@ -18,7 +18,7 @@ public class BankUserAddress {
 	
 	// constructors
 	
-	public BankUserAddress(String name, String streetNumber, String streetName, String city, String region, String zip,
+	public BankUserDomicile(String name, String streetNumber, String streetName, String city, String region, String zip,
 			String country, String email, int ss, Boolean done, Boolean approved) {
 		super();
 		this.name = name;
@@ -34,7 +34,7 @@ public class BankUserAddress {
 		this.approved = approved;
 	}
 
-	public BankUserAddress() {
+	public BankUserDomicile() {
 		super();
 	}
 	
@@ -156,7 +156,7 @@ public class BankUserAddress {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BankUserAddress other = (BankUserAddress) obj;
+		BankUserDomicile other = (BankUserDomicile) obj;
 		if (approved == null) {
 			if (other.approved != null)
 				return false;
