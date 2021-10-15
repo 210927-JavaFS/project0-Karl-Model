@@ -17,7 +17,7 @@ public class BankMenuController {
 		System.out.println("                  Welcomes You");
 		System.out.println("==================================================");
 		System.out.println("What would you like to do? \n"
-				+"1) Sign Up \n"
+				+"1) Sign In \n"
 				+"2) Register \n"
 				+"3) Exit the application");
 		String response = scan.nextLine();
@@ -26,18 +26,20 @@ public class BankMenuController {
 			switch (response) {
 				case "1":
 					// TODO call menu
-					membersMenu();
+					//internalMenu();
+					signIn();
 					System.out.println("What would you like to do? \n"
-							+"1) See Members Options \n"
-							+"2) See Residential Options \n"
+							+"1) Sign In \n"
+							+"2) Register \n"
 							+"3) Exit the application");
 					response = scan.nextLine();
 					break;
 				case "2":
-					domicilesMenu();
+					//internalMenu();
+					bankUserController.addPerson();
 					System.out.println("What would you like to do? \n"
-							+"1) See Members Options \n"
-							+"2) See Residential Options \n"
+							+"1) Sign In \n"
+							+"2) Register \n"
 							+"3) Exit the application");
 					response = scan.nextLine();			
 			}
@@ -51,11 +53,11 @@ public class BankMenuController {
 		System.out.println("==================================================");
 		System.out.println("        Administrative and Employee Menu");
 		System.out.println("==================================================");
-		System.out.println("         Part One: Primary Residence");
+		System.out.println("         View/Edit Customer Information");
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 		System.out.println("What would you like to do? \n"
-				+"1) View Customer Identity Information \n"
-				+"2) View Customer Residential Informmation \n"
+				+"1) View/Edit Customer Identity Information \n"
+				+"2) View/Edit Customer Residential Informmation \n"
 				+"3) Exit the application");
 		String response = scan.nextLine();
 		
@@ -65,16 +67,16 @@ public class BankMenuController {
 					// TODO call menu
 					membersMenu();
 					System.out.println("What would you like to do? \n"
-							+"1) View Customer Identity Information \n"
-							+"2) View Customer Residential Informmation \n"
+							+"1) View/Edit Customer Identity Information \n"
+							+"2) View/Edit Customer Residential Informmation \n"
 							+"3) Exit the application");
 					response = scan.nextLine();
 					break;
 				case "2":
 					domicilesMenu();
 					System.out.println("What would you like to do? \n"
-							+"1) View Customer Identity Information \n"
-							+"2) View Customer Residential Informmation \n"
+							+"1) View/Edit Customer Identity Information \n"
+							+"2) View/Edit Customer Residential Informmation \n"
 							+"3) Exit the application");
 					response = scan.nextLine();			
 			}
@@ -83,31 +85,34 @@ public class BankMenuController {
 	}
 
 	private void membersMenu() {
-		System.out.println("Ways to View Customer Identity Information: \n"
+		System.out.println("View/Edit Customer Identity Information: \n"
 				+ "1) Show all Members \n"
 				+ "2) Show all Customers \n"
 				+ "3) Show one Customer \n"
-				+ "4) Return to previous menu.");
+				+ "4) Add a Member to the database \n"
+				+ "5) Return to previous menu.");
 		String response = scan.nextLine();
 		
-		while(!response.equals("4")) {
+		while(!response.equals("5")) {
 			switch (response) {
 				case "1":
 					bankUserController.showAllPeople();
-					System.out.println("Ways to View Customer Identity Information: \n"
+					System.out.println("View/Edit Customer Identity Information: \n"
 							+ "1) Show all Members \n"
 							+ "2) Show all Customers \n"
 							+ "3) Show one Customer  \n"
-							+ "4) Return to previous menu.");
+							+ "4) Add a Member to the database \n"
+							+ "5) Return to previous menu.");
 					response = scan.nextLine();
 					break;
 				case "2":
 					bankUserController.showAllCustomers();
-					System.out.println("Ways to View Customer Identity Information: \n"
+					System.out.println("View/Edit Customer Identity Information: \n"
 							+ "1) Show all Members  \n"
 							+ "2) Show all Customers \n"
 							+ "3) Show one Customer \n"
-							+ "4) Return to previous menu.");
+							+ "4) Add a Member to the database \n"
+							+ "5) Return to previous menu.");
 					response = scan.nextLine();
 					break;
 				case "3":
@@ -115,23 +120,41 @@ public class BankMenuController {
 					String name = scan.nextLine();
 					bankUserController.displayOneCustomer(name);
 					
-					System.out.println("Ways to View Customer Identity Information: \n"
+					System.out.println("View/Edit Customer Identity Information: \n"
 							+ "1) Show all Members \n"
 							+ "2) Show all Customers \n"
 							+ "3) Show one Customer \n"
-							+ "4) Return to previous menu.");
+							+ "4) Add a Member to the database \n"
+							+ "5) Return to previous menu.");
 					response = scan.nextLine();
 				case "4":
+					bankUserController.addPerson();
+					System.out.println("View/Edit Customer Residential Information: \n"
+							+ "1) Show all Members \n"
+							+ "2) Show all Customers \n"
+							+ "3) Show one Customer \n"
+							+ "4) Add a Member to the database \n"
+							+ "5) Return to previous menu.");				
+					response = scan.nextLine();
+					break;
+				case "5":
 					break;					
 				default:
-					System.out.println("Type 4 to exit.");
+					System.out.println("That was not a valid input. Please try again.");
+					System.out.println("View/Edit Customer Identity Information: \n"
+							+ "1) Show all Members \n"
+							+ "2) Show all Customers \n"
+							+ "3) Show one Customer \n"
+							+ "4) Add a Member to the database \n"
+							+ "5) Return to previous menu.");					
+					response = scan.nextLine();
 					break;
 			}
 		}
 	}
 
 	private void domicilesMenu() {
-		System.out.println("Ways to View or Edit Customer Residential Information: \n"
+		System.out.println("View/Edit Customer Residential Information: \n"
 				+ "1) Show all Residences \n"
 				+ "2) Show one Residence \n"
 				+ "3) Add a Residence to the database \n"
@@ -142,7 +165,7 @@ public class BankMenuController {
 			switch (response){
 				case "1":
 					bankUserDomicileController.displayAllResidences();
-					System.out.println("Ways to View or Edit Customer Residential Information: \n"
+					System.out.println("View/Edit Customer Residential Information: \n"
 							+ "1) Show all Residences \n"
 							+ "2) Show one Residence \n"
 							+ "3) Add a Residence to the database \n"
@@ -154,7 +177,7 @@ public class BankMenuController {
 					String name = scan.nextLine();
 					bankUserDomicileController.displayOneResidence(name);
 					
-					System.out.println("Ways to View or Edit Customer Residential Information: \n"
+					System.out.println("View/Edit Customer Residential Information: \n"
 							+ "1) Show all Residences \n"
 							+ "2) Show one Residence \n"
 							+ "3) Add a Residence to the database \n"
@@ -163,7 +186,7 @@ public class BankMenuController {
 					break;
 				case "3":
 					bankUserDomicileController.addResidence();
-					System.out.println("Ways to View or Edit Customer Residential Information: \n"
+					System.out.println("View/Edit Customer Residential Information: \n"
 							+ "1) Show all Residences \n"
 							+ "2) Show one Residence \n"
 							+ "3) Add a Residence to the database \n"
@@ -174,7 +197,7 @@ public class BankMenuController {
 					break;
 				default:
 					System.out.println("That was not a valid input. Please try again.");
-					System.out.println("Ways to View or Edit Customer Residential Information: \n"
+					System.out.println("View/Edit Customer Residential Information: \n"
 							+ "1) Show all Residences \n"
 							+ "2) Show one Residence \n"
 							+ "3) Add a Residence to the database. \n"
@@ -185,5 +208,93 @@ public class BankMenuController {
 			}
 		}
 	}
+	
+	public void bankAtmMenu() {
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		System.out.println("                FirstBankOfJava");
+		System.out.println("==================================================");
+		System.out.println("            Banking ATM Services Menu");
+		System.out.println("==================================================");
+		System.out.println("          Create Financial Transactions");
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		System.out.println("What would you like to do? \n"
+				+"1) Deposit Funds \n"
+				+"2) Withdraw Funds \n"
+				+"3) Transfer Funds \n"
+				+"4) View Account Balance \n"
+				+"5) Exit the application");
+		String response = scan.nextLine();
+		
+		while(!response.equals("5")) {
+			switch (response) {
+				case "1":
+					// TODO call menu
+					//depositMenu();
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");
+					response = scan.nextLine();
+					break;
+				case "2":
+					//withdrawMenu();
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");
+					response = scan.nextLine();
+				case "3":
+					// TODO call menu
+					//transferMenu();
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");
+					response = scan.nextLine();
+					break;
+				case "4":
+					//viewBalanceMenu();
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");
+					response = scan.nextLine();					
+				case "5":
+					break;
+				default:
+					System.out.println("That was not a valid input. Please try again.");
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");					
+					response = scan.nextLine();
+					break;
+			}
+		}	
+	}
 
+	public void signIn() {
+		System.out.println("What is your email?");
+		String email = scan.nextLine();
+		System.out.println("What is your password?");
+		String pwd = scan.nextLine();
+		
+		//ToDo: if (BankUser.role.equals("CUSTOMER")) {
+		if (true){            
+			bankAtmMenu();
+		}
+		else{
+			internalMenu();
+		}		
+	}
 }

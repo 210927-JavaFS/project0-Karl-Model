@@ -2,3 +2,50 @@
 16:12:06.546 [Tim=1] [main] INFO  com.revature.Driver - This is a really awesome application
 16:12:06.548 [Tim=1] [main] ERROR com.revature.Driver - OH NO! Is something going wrong?
 16:12:06.549 [Tim=1] [main] WARN  com.revature.Driver - Program ending
+06:24:16.006 [] [main] DEBUG com.revature.BankDriver - Fun Times are about to start!
+06:24:16.009 [Tim=1] [main] INFO  com.revature.BankDriver - This is a really awesome application
+06:24:16.010 [Tim=1] [main] ERROR com.revature.BankDriver - OH NO! Is something going wrong?
+06:24:16.011 [Tim=1] [main] WARN  com.revature.BankDriver - Program ending
+06:45:37.350 [] [main] DEBUG com.revature.BankDriver - application has started
+06:45:37.354 [anonymous=1] [main] INFO  com.revature.BankDriver - main method
+06:45:37.355 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+06:50:01.813 [] [main] DEBUG com.revature.BankDriver - application has started
+06:50:01.816 [anonymous=1] [main] INFO  com.revature.BankDriver - main method
+06:50:01.817 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+06:50:01.817 [anonymous=1] [main] WARN  com.revature.BankDriver - program ending
+06:56:36.743 [] [main] DEBUG com.revature.BankDriver - application has started
+06:56:36.746 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+06:56:36.748 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+06:56:36.748 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+06:58:45.727 [] [main] DEBUG com.revature.BankDriver - application has started
+06:58:45.730 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+06:58:45.731 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+06:58:45.732 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+06:58:45.780 [] [main] DEBUG com.revature.BankDriver - application has started
+06:58:45.783 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+06:58:45.784 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+06:58:45.785 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+07:02:01.333 [anonymous=1] [main] DEBUG com.revature.BankDriver - application is ending
+07:02:01.334 [anonymous=1] [main] INFO  com.revature.BankDriver - main method completed
+07:02:01.334 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+07:02:01.334 [anonymous=1] [main] WARN  com.revature.BankDriver - program ending
+07:12:12.961 [] [main] DEBUG com.revature.BankDriver - application has started
+07:12:12.964 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+07:12:12.964 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+07:12:12.965 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+07:49:39.744 [] [main] DEBUG com.revature.BankDriver - application has started
+07:49:39.748 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+07:49:39.749 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+07:49:39.749 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+07:58:06.652 [] [main] DEBUG com.revature.BankDriver - application has started
+07:58:06.655 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+07:58:06.656 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+07:58:06.657 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+08:03:05.910 [] [main] DEBUG com.revature.BankDriver - application has started
+08:03:05.914 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+08:03:05.915 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+08:03:05.916 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+08:26:21.278 [] [main] DEBUG com.revature.BankDriver - application has started
+08:26:21.281 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+08:26:21.282 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+08:26:21.283 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
