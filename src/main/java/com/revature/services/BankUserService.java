@@ -5,6 +5,7 @@ import java.util.List;
 import com.revature.daos.BankUserDAO;
 import com.revature.daos.BankUserDAOImpl;
 import com.revature.models.BankUser;
+import com.revature.models.BankUserDomicile;
 
 public class BankUserService {
 
@@ -12,6 +13,15 @@ public class BankUserService {
 	
 	public List<BankUser> peopleAssemble(){
 		return bankUserDao.findAll();
+	}
+	
+	public BankUser findByName(String name) {
+		return bankUserDao.findByName(name);
+		
+	}
+	
+	public boolean newPerson(BankUser bankUser) {
+		return bankUserDao.addPerson(bankUser);
 	}
 
 }

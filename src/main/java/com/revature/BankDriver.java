@@ -13,6 +13,7 @@ public class BankDriver {
 	public static void main(String[] args) {
 		//bankUserDomicileController.displayAllResidences();
 		//bankUserController.showAllPeople();
-		bankMenuController.welcomeMenu();
+		//bankMenuController.welcomeMenu();
+		bankMenuController.internalMenu();
 	}
 }
