@@ -1,5 +1,5 @@
-package com.revature.dao;
-
+package com.revature.daos;
+/*
 import java.util.List;
 
 import com.revature.model.BankAccount;
@@ -15,3 +15,4 @@ public interface BankAccountDAO {
 	public void withdraw(int id);
 	public void deposit(int id);
 }
+*/

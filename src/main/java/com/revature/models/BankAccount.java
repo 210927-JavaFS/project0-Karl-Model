@@ -1,5 +1,5 @@
-package com.revature.model;
-
+package com.revature.models;
+/*
 public class BankAccount {
 	
 	private int id;
@@ -65,3 +65,4 @@ public class BankAccount {
 	
 	
 }
+*/

@@ -1,5 +1,5 @@
-package com.revature.util;
-
+package com.revature.utils;
+/*
 import java.text.DecimalFormat;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -97,3 +97,4 @@ public class UserInputValidation {
 		return formattedDecimal.format(floatVal);
 	}
 }
+*/
