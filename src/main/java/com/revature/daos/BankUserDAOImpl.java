@@ -185,7 +185,11 @@ public class BankUserDAOImpl implements BankUserDAO {
 			statement.setBoolean(++count, bankUser.getApproved());				
 			//statement.setString(++count, bankUser.getBankUserDomicile());
 			BankUserDomicile bankUserDomicile = bankUser.getBankUserDomicile();
-			statement.setString(++count, bankUserDomicile.getName());					
+			if(bankUserDomicile!=null) {
+				statement.setString(++count, bankUserDomicile.getName());
+			}else {
+				statement.setString(++count, null);	
+			}
 			
 			statement.execute();
 			

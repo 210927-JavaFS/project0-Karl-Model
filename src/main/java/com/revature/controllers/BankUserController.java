@@ -5,20 +5,14 @@ import java.util.Scanner;
 
 import com.revature.models.BankUser;
 import com.revature.models.BankUserDomicile;
+//import com.revature.models.BankAccount;
 import com.revature.services.BankUserService;
+//import com.revature.services.BankAccountService;
 
 public class BankUserController {
 
 	private BankUserService bankUserService = new BankUserService();
 	private Scanner scan = new Scanner(System.in);
-	
-	public void showAllPeople() {
-		System.out.println("Here are all the Users:");
-		List<BankUser> list = bankUserService.peopleAssemble();
-		for(BankUser u:list) {
-			System.out.println(u);
-		}
-	}
 	
 	public void showAllCustomers() {
 		System.out.println("Here are all the Customers:");
@@ -29,14 +23,8 @@ public class BankUserController {
 		}
 	}
 	
-	public void displayOnePerson(String name) {
-		System.out.println("Here is the Member with LastNam: "+name+":");
-		BankUser bankUser = bankUserService.findByName(name);
-		System.out.println(bankUser);
-	}
-	
 	public void displayOneCustomer(String name) {
-		System.out.println("Here is the Customer with LastName: "+name+":");
+		System.out.println("Here is the Customer whose Last Name is "+name+":");
 		BankUser bankUser = bankUserService.findByName(name);
 		//ToDo: exclude Non-Customers
 		System.out.println(bankUser);
@@ -58,9 +46,9 @@ public class BankUserController {
 		String firstName = scan.nextLine();
 		System.out.println("What is your last name?");
 		String lastName = scan.nextLine();
-		System.out.println("What is your role?");
+		System.out.println("For Internal Use Only: What is your role? (CUSTOMER, EMPLOYEE, ADMIN)");
 		String role = scan.nextLine();
-		System.out.println("What is your social security number? (digits only)");
+		System.out.println("What is your social security number? (digits only)"); // toDo: remove from table, object (retain in external Table)
 		//Integer ss = scan.nextLine(); // error
 		Integer ss = Integer.parseInt(scan.nextLine());
 		System.out.println("For Internal Use Only: is this identity profile complete? (T/F)");
@@ -92,6 +80,7 @@ public class BankUserController {
 			approved = false;
 		}
 		BankUser bankUser = new BankUser(email, pwd, firstName, lastName, role, ss, done, approved, null);
+		//BankUser bankUser = new BankUser(email, pwd, firstName, lastName, role, done, approved, null); // terminal parameter is a null placeholder, intended to represent a Foreign Key in related Tables
 		
 		if(bankUserService.newPerson(bankUser)) {
 			System.out.println("Your Personal Information was successfully submitted");
@@ -99,5 +88,19 @@ public class BankUserController {
 			System.out.println("Something went wrong. We could not register your Personal Information. Please try again.");
 		}
 	}
+	
+	public void showAllPeople() {
+		System.out.println("Here are all the Users:");
+		List<BankUser> list = bankUserService.peopleAssemble();
+		for(BankUser u:list) {
+			System.out.println(u);
+		}
+	}
+	
+	public void displayOnePerson(String name) {
+		System.out.println("Here is the Member whose Last Name is "+name+":");
+		BankUser bankUser = bankUserService.findByName(name);
+		System.out.println(bankUser);
+	}	
 	
 }

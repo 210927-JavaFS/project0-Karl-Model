@@ -29,7 +29,7 @@ public class BankDriver {
 		//bankUserDomicileController.displayAllResidences();
 		//bankUserController.howAllPeople();
 		bankMenuController.welcomeMenu();
-		//bankMenuController.internalMenu();
+		bankMenuController.internalMenu(); // enabled temporarily for presentation
 		
 		
 		log.debug("application is ending");

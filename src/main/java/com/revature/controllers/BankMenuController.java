@@ -9,6 +9,80 @@ public class BankMenuController {
 	private static BankUserController bankUserController = new BankUserController();
 
 
+	public void bankAtmMenu() {
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		System.out.println("                FirstBankOfJava");
+		System.out.println("==================================================");
+		System.out.println("            Banking ATM Services Menu");
+		System.out.println("==================================================");
+		System.out.println("          Create Financial Transactions");
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		System.out.println("What would you like to do? \n"
+				+"1) Deposit Funds \n"
+				+"2) Withdraw Funds \n"
+				+"3) Transfer Funds \n"
+				+"4) View Account Balance \n"
+				+"5) Exit the application");
+		String response = scan.nextLine();
+		
+		while(!response.equals("5")) {
+			switch (response) {
+				case "1":
+					// TODO call menu
+					//depositMenu();
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");
+					response = scan.nextLine();
+					break;
+				case "2":
+					//withdrawMenu();
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");
+					response = scan.nextLine();
+				case "3":
+					// TODO call menu
+					//transferMenu();
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");
+					response = scan.nextLine();
+					break;
+				case "4":
+					//viewBalanceMenu();
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");
+					response = scan.nextLine();					
+				case "5":
+					break;
+				default:
+					System.out.println("That was not a valid input. Please try again.");
+					System.out.println("What would you like to do? \n"
+							+"1) Deposit Funds \n"
+							+"2) Withdraw Funds \n"
+							+"3) Transfer Funds \n"
+							+"4) View Account Balance \n"
+							+"5) Exit the application");					
+					response = scan.nextLine();
+					break;
+			}
+		}	
+	}
+	
 	public void welcomeMenu() {
 		//System.out.println("Welcome to the FirstBankOfJava!");
 		System.out.println("==================================================");
@@ -46,6 +120,21 @@ public class BankMenuController {
 		}
 		
 	}
+
+	public void signIn() {
+		System.out.println("What is your email?");
+		String email = scan.nextLine();
+		System.out.println("What is your password?");
+		String pwd = scan.nextLine();
+		
+		//ToDo: if (BankUser.role.equals("CUSTOMER")) {
+		if (true){            
+			bankAtmMenu();
+		}
+		else{
+			internalMenu();
+		}		
+	}	
 	
 	public void internalMenu() {
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
@@ -209,92 +298,4 @@ public class BankMenuController {
 		}
 	}
 	
-	public void bankAtmMenu() {
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-		System.out.println("                FirstBankOfJava");
-		System.out.println("==================================================");
-		System.out.println("            Banking ATM Services Menu");
-		System.out.println("==================================================");
-		System.out.println("          Create Financial Transactions");
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-		System.out.println("What would you like to do? \n"
-				+"1) Deposit Funds \n"
-				+"2) Withdraw Funds \n"
-				+"3) Transfer Funds \n"
-				+"4) View Account Balance \n"
-				+"5) Exit the application");
-		String response = scan.nextLine();
-		
-		while(!response.equals("5")) {
-			switch (response) {
-				case "1":
-					// TODO call menu
-					//depositMenu();
-					System.out.println("What would you like to do? \n"
-							+"1) Deposit Funds \n"
-							+"2) Withdraw Funds \n"
-							+"3) Transfer Funds \n"
-							+"4) View Account Balance \n"
-							+"5) Exit the application");
-					response = scan.nextLine();
-					break;
-				case "2":
-					//withdrawMenu();
-					System.out.println("What would you like to do? \n"
-							+"1) Deposit Funds \n"
-							+"2) Withdraw Funds \n"
-							+"3) Transfer Funds \n"
-							+"4) View Account Balance \n"
-							+"5) Exit the application");
-					response = scan.nextLine();
-				case "3":
-					// TODO call menu
-					//transferMenu();
-					System.out.println("What would you like to do? \n"
-							+"1) Deposit Funds \n"
-							+"2) Withdraw Funds \n"
-							+"3) Transfer Funds \n"
-							+"4) View Account Balance \n"
-							+"5) Exit the application");
-					response = scan.nextLine();
-					break;
-				case "4":
-					//viewBalanceMenu();
-					System.out.println("What would you like to do? \n"
-							+"1) Deposit Funds \n"
-							+"2) Withdraw Funds \n"
-							+"3) Transfer Funds \n"
-							+"4) View Account Balance \n"
-							+"5) Exit the application");
-					response = scan.nextLine();					
-				case "5":
-					break;
-				default:
-					System.out.println("That was not a valid input. Please try again.");
-					System.out.println("What would you like to do? \n"
-							+"1) Deposit Funds \n"
-							+"2) Withdraw Funds \n"
-							+"3) Transfer Funds \n"
-							+"4) View Account Balance \n"
-							+"5) Exit the application");					
-					response = scan.nextLine();
-					break;
-			}
-		}	
-	}
-
-	public void signIn() {
-		System.out.println("What is your email?");
-		String email = scan.nextLine();
-		System.out.println("What is your password?");
-		String pwd = scan.nextLine();
-		
-		//ToDo: if (BankUser.role.equals("CUSTOMER")) {
-		if (true){            
-			bankAtmMenu();
-		}
-		else{
-			internalMenu();
-		}		
-	}
 }

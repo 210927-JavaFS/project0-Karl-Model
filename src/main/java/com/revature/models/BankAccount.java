@@ -1,5 +1,5 @@
 package com.revature.models;
-/*
+
 public class BankAccount {
 	
 	private int id;
@@ -49,7 +49,7 @@ public class BankAccount {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Bank other = (Bank) obj;
+		BankAccount other = (BankAccount) obj;
 		if (Float.floatToIntBits(balance) != Float.floatToIntBits(other.balance))
 			return false;
 		if (id != other.id)
@@ -65,4 +65,3 @@ public class BankAccount {
 	
 	
 }
-*/
