@@ -59,7 +59,7 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 	}
 
 	@Override
-	public BankAccount getBankAccountById(int id) {
+	public BankAccount findById(int id) {
 		return null;
 	}
 

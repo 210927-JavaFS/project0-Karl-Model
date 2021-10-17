@@ -6,6 +6,7 @@ import org.slf4j.MDC;
 
 //import com.revature.controllers.BankUserDomicileController;
 //import com.revature.controllers.BankUserController;
+//import com.revature.controllers.BankAccountController;
 import com.revature.controllers.BankMenuController;
 
 public class BankDriver {
@@ -29,7 +30,7 @@ public class BankDriver {
 		//bankUserDomicileController.displayAllResidences();
 		//bankUserController.howAllPeople();
 		bankMenuController.welcomeMenu();
-		bankMenuController.internalMenu(); // enabled temporarily for presentation
+		bankMenuController.employeeMenu(); // enabled temporarily for presentation
 		
 		
 		log.debug("application is ending");

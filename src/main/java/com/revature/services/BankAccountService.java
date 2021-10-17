@@ -15,10 +15,9 @@ public class BankAccountService {
 
 	private BankAccountDAO bankAccountDao = new BankAccountDAOImpl();
 	
-	public List<BankAccount> accountsAssemble(){
-		//return bankAccountDao.findAll();
-		return bankAccountDao.getAllBankAccounts();
-	}
+	  public List<BankAccount> findAllLedgers(){ //return bankAccountDao.findAll();
+	  return bankAccountDao.getAllBankAccounts(); }
+	 
 
 	/*
 	public BankAccount findByName(String name) {
@@ -31,7 +30,7 @@ public class BankAccountService {
 		return bankAccountDao.getBankAccountByUserId(id);	
 	}	
 	
-	public boolean newAccount(BankAccount bankAccount) {
+	public boolean newLedger(BankAccount bankAccount) {
 		//return bankAccountDao.addAccount(bankAccount);
 		if (bankAccountDao.createBankAccount(bankAccount) == 1) {
 			return true;

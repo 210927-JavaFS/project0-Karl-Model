@@ -1,25 +1,29 @@
 package com.revature.utils;
-/*
+
 import java.text.DecimalFormat;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
-import com.revature.main.BankDriver;
+import com.revature.BankDriver;
 
 public class UserInputValidation {
 	
 	private static Scanner sc = new Scanner(System.in);
-	private static final Logger logger = Logger.getLogger(BankDriver.class);
+	//private static final Logger logger = Logger.getLogger(BankDriver.class);
+	private static Logger log = LoggerFactory.getLogger(BankDriver.class);	
 	
 	public static String getValidUsername() {
-		logger.info("Please enter a username: ");
+		log.info("Please enter a username: ");
 		String username = sc.nextLine();
 		
 		while(!userNameIsValid(username)) {
-			logger.info("Please enter a username");
+			log.info("Please enter a username");
 			username = sc.nextLine();
 		}
 		
@@ -35,11 +39,11 @@ public class UserInputValidation {
 	}
 	
 	public static String getValidEmailAddress() {
-		logger.info("Please enter a valid email address: ");
+		log.info("Please enter a valid email address: ");
 		String emailAddress = sc.nextLine();
 		
 		while(!emailAddressIsValid(emailAddress)) {
-			logger.info("Please enter a valid email address: ");
+			log.info("Please enter a valid email address: ");
 			emailAddress = sc.nextLine();
 		}
 		
@@ -58,11 +62,11 @@ public class UserInputValidation {
 	}
 	
 	public static String getValidPassword() {
-		logger.info("Please enter a valid password. It must be at least 6 characters: ");
+		log.info("Please enter a valid password. It must be at least 6 characters: ");
 		String password = sc.nextLine();
 		
 		while(!passwordIsValid(password)) {
-			logger.info("Please enter a valid password. It must be at least 6 characters: ");
+			log.info("Please enter a valid password. It must be at least 6 characters: ");
 			password = sc.nextLine();
 		}
 		
@@ -97,4 +101,3 @@ public class UserInputValidation {
 		return formattedDecimal.format(floatVal);
 	}
 }
-*/

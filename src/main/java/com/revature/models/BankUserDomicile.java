@@ -4,6 +4,7 @@ public class BankUserDomicile {
 	
 	// fields
 	
+	private int id;
 	private String name;
 	private String streetNumber;
 	private String streetName;
@@ -11,15 +12,28 @@ public class BankUserDomicile {
 	private String region;
 	private String zip;
 	private String country;
-	private String email;
-	private int ss;
 	private Boolean done;
 	private Boolean approved;
 	
 	// constructors
 	
-	public BankUserDomicile(String name, String streetNumber, String streetName, String city, String region, String zip,
-			String country, String email, int ss, Boolean done, Boolean approved) {
+	public BankUserDomicile(int id, String name, String streetNumber, String streetName, String city, String region,
+			String zip, String country, Boolean done, Boolean approved) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.streetNumber = streetNumber;
+		this.streetName = streetName;
+		this.city = city;
+		this.region = region;
+		this.zip = zip;
+		this.country = country;
+		this.done = done;
+		this.approved = approved;
+	}
+
+	public BankUserDomicile(String name, String streetNumber, String streetName, String city, String region,
+			String zip, String country, Boolean done, Boolean approved) {
 		super();
 		this.name = name;
 		this.streetNumber = streetNumber;
@@ -28,17 +42,23 @@ public class BankUserDomicile {
 		this.region = region;
 		this.zip = zip;
 		this.country = country;
-		this.email = email;
-		this.ss = ss;
 		this.done = done;
 		this.approved = approved;
-	}
-
+	}	
+	
 	public BankUserDomicile() {
 		super();
 	}
-	
+
 	// methods: Get and Set
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getName() {
 		return name;
@@ -96,22 +116,6 @@ public class BankUserDomicile {
 		this.country = country;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public int getSs() {
-		return ss;
-	}
-
-	public void setSs(int ss) {
-		this.ss = ss;
-	}
-
 	public Boolean getDone() {
 		return done;
 	}
@@ -127,8 +131,9 @@ public class BankUserDomicile {
 	public void setApproved(Boolean approved) {
 		this.approved = approved;
 	}
+
 	
-	// override for methods: equals() and hashcode()
+	// override for methods: hashcode() and equals()
 
 	@Override
 	public int hashCode() {
@@ -138,10 +143,8 @@ public class BankUserDomicile {
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((done == null) ? 0 : done.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((region == null) ? 0 : region.hashCode());
-		result = prime * result + ss;
 		result = prime * result + ((streetName == null) ? 0 : streetName.hashCode());
 		result = prime * result + ((streetNumber == null) ? 0 : streetNumber.hashCode());
 		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
@@ -177,11 +180,6 @@ public class BankUserDomicile {
 				return false;
 		} else if (!done.equals(other.done))
 			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -191,8 +189,6 @@ public class BankUserDomicile {
 			if (other.region != null)
 				return false;
 		} else if (!region.equals(other.region))
-			return false;
-		if (ss != other.ss)
 			return false;
 		if (streetName == null) {
 			if (other.streetName != null)
@@ -211,16 +207,15 @@ public class BankUserDomicile {
 			return false;
 		return true;
 	}
+
 	
 	// override for method: toString()
 
 	@Override
 	public String toString() {
 		return "BankUserDomicile [name=" + name + ", streetNumber=" + streetNumber + ", streetName=" + streetName
-				+ ", city=" + city + ", region=" + region + ", zip=" + zip + ", country=" + country + ", email=" + email
-				+ ", ss=" + ss + ", done=" + done + ", approved=" + approved + "]";
+				+ ", city=" + city + ", region=" + region + ", zip=" + zip + ", country=" + country + ", done=" + done
+				+ ", approved=" + approved + "]";
 	}
-	
-	
 	
 }

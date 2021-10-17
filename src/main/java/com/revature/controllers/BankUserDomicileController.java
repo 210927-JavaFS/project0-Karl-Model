@@ -3,8 +3,14 @@ package com.revature.controllers;
 import java.util.List;
 import java.util.Scanner;
 
+//import com.revature.models.BankUser;
 import com.revature.models.BankUserDomicile;
+//import com.revature.models.BankAccount;
+//import com.revature.services.BankUserService;
 import com.revature.services.BankUserDomicileService;
+//import com.revature.services.BankUserService;
+//import com.revature.services.BankUserDomicileService;
+//import com.revature.services.BankAccountService;
 
 public class BankUserDomicileController {
 	
@@ -51,9 +57,9 @@ public class BankUserDomicileController {
 		System.out.println("What is your country of residence?");
 		String country = scan.nextLine();
 		
-		System.out.println("What is your email?");
+		System.out.println("What is your email?"); // toDo: remove from table, object (retain in external Table)
 		String email = scan.nextLine();
-		System.out.println("What is your social security number? (digits only)");
+		System.out.println("What is your social security number? (digits only)"); // toDo: remove from table, object (retain in external Table)
 		//Integer ss = scan.nextLine(); // error
 		Integer ss = Integer.parseInt(scan.nextLine());
 		System.out.println("For Internal Use Only: is this address complete? (T/F)");
@@ -84,7 +90,7 @@ public class BankUserDomicileController {
 			System.out.println("unrecognized value set to False");
 			approved = false;
 		}
-		BankUserDomicile bankUserDomicile = new BankUserDomicile(name, number, stName, city, region, zip, country, email, ss, done, approved);
+		BankUserDomicile bankUserDomicile = new BankUserDomicile(name, number, stName, city, region, zip, country, done, approved);
 		
 		if(bankUserDomicileService.newResidence(bankUserDomicile)) {
 			System.out.println("Your Primary Residence was successfully submitted");

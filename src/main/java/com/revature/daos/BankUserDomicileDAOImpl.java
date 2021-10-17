@@ -30,6 +30,7 @@ public class BankUserDomicileDAOImpl implements BankUserDomicileDAO {
 			
 			while(result.next()) {
 				BankUserDomicile bankUserDomicile = new BankUserDomicile();
+				bankUserDomicile.setId(result.getInt("home_id")); // a numeric Primary Key was not part of the original homes table created in DBeaver for demo "HelloJDBC.java"
 				bankUserDomicile.setName(result.getString("home_name"));
 				bankUserDomicile.setStreetNumber(result.getString("home_number"));
 				bankUserDomicile.setStreetName(result.getString("home_street"));
@@ -37,8 +38,6 @@ public class BankUserDomicileDAOImpl implements BankUserDomicileDAO {
 				bankUserDomicile.setRegion(result.getString("home_region"));
 				bankUserDomicile.setZip(result.getString("home_zip"));
 				bankUserDomicile.setCountry(result.getString("home_country"));
-				bankUserDomicile.setEmail(result.getString("user_email"));
-				bankUserDomicile.setSs(result.getInt("user_ss"));
 				bankUserDomicile.setDone(result.getBoolean("home_profile_done"));
 				bankUserDomicile.setApproved(result.getBoolean("home_profile_approved"));
 				list.add(bankUserDomicile);
@@ -72,6 +71,7 @@ public class BankUserDomicileDAOImpl implements BankUserDomicileDAO {
 			//with a while loop to iterate through all the data.
 				
 			while(result.next()) { should work with simple Statement
+				bankUserDomicile.setId(result.getInt("home_id")); // a numeric Primary Key was not part of the original homes table created in DBeaver for demo "HelloJDBC.java"			
 				bankUserDomicile.setName(result.getString("home_name"));
 				bankUserDomicile.setStreetNumber(result.getString("home_number"));
 				bankUserDomicile.setStreetName(result.getString("home_street"));
@@ -79,8 +79,6 @@ public class BankUserDomicileDAOImpl implements BankUserDomicileDAO {
 				bankUserDomicile.setRegion(result.getString("home_region"));
 				bankUserDomicile.setZip(result.getString("home_zip"));
 				bankUserDomicile.setCountry(result.getString("home_country"));
-				bankUserDomicile.setEmail(result.getString("user_email"));
-				bankUserDomicile.setSs(result.getInt("user_ss"));
 				bankUserDomicile.setDone(result.getBoolean("home_profile_done"));
 				bankUserDomicile.setApproved(result.getBoolean("home_profile_approved"));
 			}	
@@ -105,7 +103,8 @@ public class BankUserDomicileDAOImpl implements BankUserDomicileDAO {
 			//with a while loop to iterate through all the data. 
 			
 			if(result.next()) {
-				
+
+				bankUserDomicile.setId(result.getInt("home_id")); // a numeric Primary Key was not part of the original homes table created in DBeaver for demo "HelloJDBC.java"				
 				bankUserDomicile.setName(result.getString("home_name"));
 				bankUserDomicile.setStreetNumber(result.getString("home_number"));
 				bankUserDomicile.setStreetName(result.getString("home_street"));
@@ -113,8 +112,6 @@ public class BankUserDomicileDAOImpl implements BankUserDomicileDAO {
 				bankUserDomicile.setRegion(result.getString("home_region"));
 				bankUserDomicile.setZip(result.getString("home_zip"));
 				bankUserDomicile.setCountry(result.getString("home_country"));
-				bankUserDomicile.setEmail(result.getString("user_email"));
-				bankUserDomicile.setSs(result.getInt("user_ss"));
 				bankUserDomicile.setDone(result.getBoolean("home_profile_done"));
 				bankUserDomicile.setApproved(result.getBoolean("home_profile_approved"));
 
@@ -131,6 +128,82 @@ public class BankUserDomicileDAOImpl implements BankUserDomicileDAO {
 	}
 	
 	@Override
+	public BankUserDomicile findById(int id) {
+		try(Connection conn = BankConnectionUtil.getConnection()) { //try-with-resources			
+			// start: vulnerable to sql injection attacks
+			/*
+			//String sql = "SELECT * FROM bankuseraddress";
+			String sql = "SELECT * FROM bankuseraddress WHERE home_id = +id+"; // vulnerable to SQL injection attacks"
+				
+			Statement statement = conn.createStatement();		
+				
+			ResultSet result = statement.executeQuery(sql);
+				
+			//List<BankUserDomicile> list = new ArrayList<>();
+			
+			BankUserDomicile bankUserDomicile = new BankUserDomicile();
+				
+			//ResultSets have a cursor (similar to Scanner or other I/O classes) that can be used
+			//with a while loop to iterate through all the data.
+				
+			while(result.next()) { should work with simple Statement
+				bankUserDomicile.setId(result.getInt("home_id")); // a numeric Primary Key was not part of the original homes table created in DBeaver for demo "HelloJDBC.java"
+				bankUserDomicile.setName(result.getString("home_name"));
+				bankUserDomicile.setStreetNumber(result.getString("home_number"));
+				bankUserDomicile.setStreetName(result.getString("home_street"));
+				bankUserDomicile.setCity(result.getString("home_city"));
+				bankUserDomicile.setRegion(result.getString("home_region"));
+				bankUserDomicile.setZip(result.getString("home_zip"));
+				bankUserDomicile.setCountry(result.getString("home_country"));
+				bankUserDomicile.setDone(result.getBoolean("home_profile_done"));
+				bankUserDomicile.setApproved(result.getBoolean("home_profile_approved"));
+			}	
+			
+			return bankUserDomicile;
+			*/	
+			// end: vulnerable to sql injection attacks
+			
+			// start: modification against attacks
+
+			String sql = "SELECT * FROM bankuseraddress WHERE home_id = ?;";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setInt(1, id);
+			
+			ResultSet result = statement.executeQuery();
+			
+			BankUserDomicile bankUserDomicile = new BankUserDomicile();
+			
+			//ResultSets have a cursor (similar to Scanner or other I/O classes) that can be used 
+			//with a while loop to iterate through all the data. 
+			
+			if(result.next()) {
+				
+				bankUserDomicile.setId(result.getInt("home_id"));
+				bankUserDomicile.setName(result.getString("home_name"));
+				bankUserDomicile.setStreetNumber(result.getString("home_number"));
+				bankUserDomicile.setStreetName(result.getString("home_street"));
+				bankUserDomicile.setCity(result.getString("home_city"));
+				bankUserDomicile.setRegion(result.getString("home_region"));
+				bankUserDomicile.setZip(result.getString("home_zip"));
+				bankUserDomicile.setCountry(result.getString("home_country"));
+				bankUserDomicile.setDone(result.getBoolean("home_profile_done"));
+				bankUserDomicile.setApproved(result.getBoolean("home_profile_approved"));
+
+			}
+			
+			return bankUserDomicile;			
+			
+			// end: modification against attacks
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}	
+	
+	@Override
 	public boolean updateResidence(BankUserDomicile bankUserDomicile) {
 		// TODO Auto-generated method stub
 		return false;
@@ -140,13 +213,14 @@ public class BankUserDomicileDAOImpl implements BankUserDomicileDAO {
 	public boolean addResidence(BankUserDomicile bankUserDomicile) {
 		try(Connection conn = BankConnectionUtil.getConnection()){
 			
-			String sql = "INSERT INTO bankuseraddress (home_name, home_number, home_street, home_city, home_region, home_zip, home_country, user_email, user_ss, home_profile_done, hom_profile_approved) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+			String sql = "INSERT INTO bankuseraddress (home_name, home_number, home_street, home_city, home_region, home_zip, home_country, home_profile_done, hom_profile_approved) "
+					+ "VALUES (?,?,?,?,?,?,?,?,?);";
 			
 			int count = 0;
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
+			//statement.setInt(++count, bankUserDomicile.getId()); // commented out to allow SERIALIZE constraint to create Primary Key in database via SQL
 			statement.setString(++count, bankUserDomicile.getName());
 			statement.setString(++count, bankUserDomicile.getStreetNumber());
 			statement.setString(++count, bankUserDomicile.getStreetName());
@@ -154,8 +228,6 @@ public class BankUserDomicileDAOImpl implements BankUserDomicileDAO {
 			statement.setString(++count, bankUserDomicile.getRegion());
 			statement.setString(++count, bankUserDomicile.getZip());
 			statement.setString(++count, bankUserDomicile.getCountry());
-			statement.setString(++count, bankUserDomicile.getEmail());
-			statement.setInt(++count, bankUserDomicile.getSs());
 			statement.setBoolean(++count, bankUserDomicile.getDone());
 			statement.setBoolean(++count, bankUserDomicile.getApproved());
 			

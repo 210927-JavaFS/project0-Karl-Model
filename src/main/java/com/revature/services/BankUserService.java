@@ -11,7 +11,7 @@ public class BankUserService {
 
 	private BankUserDAO bankUserDao = new BankUserDAOImpl();
 	
-	public List<BankUser> peopleAssemble(){
+	public List<BankUser> findAllPersons(){
 		return bankUserDao.findAll();
 	}
 	

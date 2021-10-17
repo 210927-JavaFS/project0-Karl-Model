@@ -6,44 +6,47 @@ public class BankUser {
 	
 	private int id;
 	private String email;
+	private String userName;
 	private String pwd;
 	private String firstName;
 	private String lastName;
 	private String role;
-	private int ss;
 	private Boolean done;
 	private Boolean approved;
-	private BankUserDomicile bankUserDomicile; // home exists in OOP but in SQL home is a FK pointing to another record
+	private BankUserDomicile bankUserDomicile; // bankUserDomicile exists in OOP but in SQL home_id is a FK pointing to another record
+	private BankAccount bankAccount; // bankAccount exists in OOP but in SQL account_id is a FK pointing to another record
 	
 	// constructors
 	
-	public BankUser(int id, String email, String pwd, String firstName, String lastName, String role, int ss,
-			Boolean done, Boolean approved, BankUserDomicile bankUserDomicile) {
+	public BankUser(int id, String email, String userName, String pwd, String firstName, String lastName, String role,
+			Boolean done, Boolean approved, BankUserDomicile bankUserDomicile, BankAccount bankAccount) {
 		super();
 		this.id = id;
 		this.email = email;
+		this.userName = userName;
 		this.pwd = pwd;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.role = role;
-		this.ss = ss;
 		this.done = done;
 		this.approved = approved;
 		this.bankUserDomicile = bankUserDomicile;
+		this.bankAccount = bankAccount;
 	}
 
-	public BankUser(String email, String pwd, String firstName, String lastName, String role, int ss, Boolean done,
-			Boolean approved, BankUserDomicile bankUserDomicile) {
+	public BankUser(String email, String userName, String pwd, String firstName, String lastName, String role, Boolean done,
+			Boolean approved, BankUserDomicile bankUserDomicile, BankAccount bankAccount) {
 		super();
 		this.email = email;
+		this.userName = userName;
 		this.pwd = pwd;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.role = role;
-		this.ss = ss;
 		this.done = done;
 		this.approved = approved;
 		this.bankUserDomicile = bankUserDomicile;
+		this.bankAccount = bankAccount;
 	}
 
 	public BankUser() {
@@ -68,6 +71,14 @@ public class BankUser {
 		this.email = email;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 	public String getPwd() {
 		return pwd;
 	}
@@ -100,14 +111,6 @@ public class BankUser {
 		this.role = role;
 	}
 
-	public int getSs() {
-		return ss;
-	}
-
-	public void setSs(int ss) {
-		this.ss = ss;
-	}
-
 	public Boolean getDone() {
 		return done;
 	}
@@ -131,12 +134,21 @@ public class BankUser {
 	public void setBankUserDomicile(BankUserDomicile bankUserDomicile) {
 		this.bankUserDomicile = bankUserDomicile;
 	}
+	
+	public BankAccount getBankAccount() {
+		return bankAccount;
+	}
+
+	public void setBankAccount(BankAccount bankAccount) {
+		this.bankAccount = bankAccount;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((approved == null) ? 0 : approved.hashCode());
+		result = prime * result + ((bankAccount == null) ? 0 : bankAccount.hashCode());
 		result = prime * result + ((bankUserDomicile == null) ? 0 : bankUserDomicile.hashCode());
 		result = prime * result + ((done == null) ? 0 : done.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
@@ -145,11 +157,11 @@ public class BankUser {
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((pwd == null) ? 0 : pwd.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + ss;
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
-	}
-
-	// override for methods: equals() and hashcode()
+	}	
+	
+	// override for methods: hashcode() and equals()
 
 	@Override
 	public boolean equals(Object obj) {
@@ -164,6 +176,11 @@ public class BankUser {
 			if (other.approved != null)
 				return false;
 		} else if (!approved.equals(other.approved))
+			return false;
+		if (bankAccount == null) {
+			if (other.bankAccount != null)
+				return false;
+		} else if (!bankAccount.equals(other.bankAccount))
 			return false;
 		if (bankUserDomicile == null) {
 			if (other.bankUserDomicile != null)
@@ -202,23 +219,21 @@ public class BankUser {
 				return false;
 		} else if (!role.equals(other.role))
 			return false;
-		if (ss != other.ss)
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
 			return false;
 		return true;
 	}
-
+	
 	// override for method: toString()
 
 	@Override
 	public String toString() {
-		return "BankUser [id=" + id + ", email=" + email + ", pwd=" + pwd + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", role=" + role + ", ss=" + ss + ", done=" + done + ", approved=" + approved
-				+ ", bankUserDomicile=" + bankUserDomicile + "]";
-	}
-	
-	
-	
-	
-	
+		return "BankUser [id=" + id + ", email=" + email + ", userName=" + userName + ", pwd=" + pwd + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", role=" + role + ", done=" + done + ", approved=" + approved
+				+ ", bankUserDomicile=" + bankUserDomicile + ", bankAccount=" + bankAccount + "]";
+	}	
 	
 }

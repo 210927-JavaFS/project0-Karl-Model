@@ -10,11 +10,13 @@ import java.util.List;
 
 import com.revature.models.BankUser;
 import com.revature.models.BankUserDomicile;
+import com.revature.models.BankAccount;
 import com.revature.utils.BankConnectionUtil;
 
 public class BankUserDAOImpl implements BankUserDAO {
 	
 	private BankUserDomicileDAO bankUserDomicileDao = new BankUserDomicileDAOImpl();
+	private BankAccountDAO bankAccountDao = new BankAccountDAOImpl();
 
 	@Override
 	public List<BankUser> findAll() {
@@ -34,21 +36,34 @@ public class BankUserDAOImpl implements BankUserDAO {
 				BankUser bankUser = new BankUser(
 						result.getInt("user_id"), 
 						result.getString("user_email"),
+						result.getString("user_name"),						
 						result.getString("user_pwd"),
 						result.getString("user_first_name"),
 						result.getString("user_last_name"),
 						result.getString("user_role"),
-						result.getInt("user_ss"),
 						result.getBoolean("user_profile_done"),
 						result.getBoolean("user_profile_approved"),
+						null,
 						null
 						);
-				String abodeName = result.getString("home_name");
-
-				if(abodeName!=null) {
-					BankUserDomicile bankUserDomicile = bankUserDomicileDao.findByName(abodeName);
+				//String abodeName = result.getString("home_name");
+				//
+				//if(abodeName!=null) {
+				//	BankUserDomicile bankUserDomicile = bankUserDomicileDao.findByName(abodeName);
+				//	bankUser.setBankUserDomicile(bankUserDomicile);
+				//}
+				 
+				Integer abodeId = result.getInt("home_id");
+				if(abodeId!=null) {
+					BankUserDomicile bankUserDomicile = bankUserDomicileDao.findById(abodeId);
 					bankUser.setBankUserDomicile(bankUserDomicile);
 				}
+				
+				Integer treasureId = result.getInt("account_id");
+				if(treasureId!=null) {
+					BankAccount bankAccount = bankAccountDao.findById(treasureId);
+					bankUser.setBankAccount(bankAccount);
+				}				
 				
 				list.add(bankUser);
 				
@@ -84,21 +99,35 @@ public class BankUserDAOImpl implements BankUserDAO {
 			while(result.next()) { should work with simple Statement
 				bankUser.setId(result.getInt("user_id")); 
 				bankUser.setEmail(result.getString("user_email"));
+				bankUser.setUserName(result.getString("user_name"));
 				bankUser.setPwd(result.getString("user_pwd"));
 				bankUser.setFirstName(result.getString("user_first_name"));
 				bankUser.setLastName(result.getString("user_last_name"));
 				bankUser.setRole(result.getString("user_role"));
-				bankUser.setSs(result.getInt("user_ss"));
 				bankUser.setDone(result.getBoolean("user_profile_done"));
 				bankUser.setApproved(result.getBoolean("user_profile_approved"));
-				//bankUser.setBankUserDomicile(result.getString("home_name"));	
+				//bankUser.setBankUserDomicile(result.getString("home_name"));
+				
+				//bankUser.setBankUserDomicile(null);
+				//String abodeName = result.getString("home_name");
+				//if(abodeName!=null) {
+				//	BankUserDomicile bankUserDomicile = bankUserDomicileDao.findByName(abodeName);
+				//	bankUser.setBankUserDomicile(bankUserDomicile);
+				//}
+				
 				bankUser.setBankUserDomicile(null);
-				String abodeName = result.getString("home_name");
-
-				if(abodeName!=null) {
-					BankUserDomicile bankUserDomicile = bankUserDomicileDao.findByName(abodeName);
+				Integer abodeId = result.getInt("home_id");
+				if(abodeId!=null) {
+					BankUserDomicile bankUserDomicile = bankUserDomicileDao.findById(abodeId);
 					bankUser.setBankUserDomicile(bankUserDomicile);
-				}				
+				}
+				
+				bankUser.setBankAccount(null);
+				Integer treasureId = result.getInt("account_id");
+				if(treasureId!=null) {
+					BankAccount bankAccount = bankAccountDao.findById(treasureId);
+					bankUser.setBankAccount(bankAccount);
+				}
 			}	
 			
 			return bankUser;
@@ -124,21 +153,35 @@ public class BankUserDAOImpl implements BankUserDAO {
 				
 				bankUser.setId(result.getInt("user_id")); 
 				bankUser.setEmail(result.getString("user_email"));
+				bankUser.setUserName(result.getString("user_name"));
 				bankUser.setPwd(result.getString("user_pwd"));
 				bankUser.setFirstName(result.getString("user_first_name"));
 				bankUser.setLastName(result.getString("user_last_name"));
 				bankUser.setRole(result.getString("user_role"));
-				bankUser.setSs(result.getInt("user_ss"));
 				bankUser.setDone(result.getBoolean("user_profile_done"));
 				bankUser.setApproved(result.getBoolean("user_profile_approved"));				
 				//bankUser.setBankUserDomicile(result.getString("home_name"));	
+				
+				//bankUser.setBankUserDomicile(null); 
+				//String abodeName = result.getString("home_name");				  
+				//if(abodeName!=null) {
+				//	BankUserDomicile bankUserDomicile = bankUserDomicileDao.findByName(abodeName);
+				//	bankUser.setBankUserDomicile(bankUserDomicile);
+				//}
+				 
 				bankUser.setBankUserDomicile(null);
-				String abodeName = result.getString("home_name");
-
-				if(abodeName!=null) {
-					BankUserDomicile bankUserDomicile = bankUserDomicileDao.findByName(abodeName);
+				Integer abodeId = result.getInt("home_id");
+				if(abodeId!=null) {
+					BankUserDomicile bankUserDomicile = bankUserDomicileDao.findById(abodeId);
 					bankUser.setBankUserDomicile(bankUserDomicile);
 				}
+				
+				bankUser.setBankAccount(null);
+				Integer treasureId = result.getInt("account_id");
+				if(treasureId!=null) {
+					BankAccount bankAccount = bankAccountDao.findById(treasureId);
+					bankUser.setBankAccount(bankAccount);
+				}				
 			}
 			
 			return bankUser;			
@@ -167,29 +210,53 @@ public class BankUserDAOImpl implements BankUserDAO {
 	public boolean addPerson(BankUser bankUser) {
 		try(Connection conn = BankConnectionUtil.getConnection()){
 			
-			String sql = "INSERT INTO bankuseridentity (user_id, user_email, user_pwd, user_first_name, user_last_name, user_role, user_ss, user_profile_done, user_profile_approved, home_name) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?);";
+			String sql = "INSERT INTO bankuseridentity (user_email, user_name, user_pwd, user_first_name, user_last_name, user_role, user_profile_done, user_profile_approved, home_id, account_id) "
+					+ "VALUES (?,?,?,?,?,?,?,?,?,?);";		
 			
 			int count = 0;
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
-			statement.setInt(++count, bankUser.getId()); 
+			//statement.setInt(++count, bankUser.getId()); // commented out to allow SERIALIZE constraint to create Primary Key in database via SQL
 			statement.setString(++count, bankUser.getEmail());
+			statement.setString(++count, bankUser.getUserName());
 			statement.setString(++count, bankUser.getPwd());
 			statement.setString(++count, bankUser.getFirstName());
 			statement.setString(++count, bankUser.getLastName());
 			statement.setString(++count, bankUser.getRole());
-			statement.setInt(++count, bankUser.getSs());
 			statement.setBoolean(++count, bankUser.getDone());
 			statement.setBoolean(++count, bankUser.getApproved());				
-			//statement.setString(++count, bankUser.getBankUserDomicile());
+			//statement.setString(++count, bankUser.getBankUserDomicile()); // error example kept as a reminder
+			
+			//==============================================================
+			// start: map database Foreign Key(s) to objects in OOP
+			//==============================================================
+			
+			//BankUserDomicile bankUserDomicile = bankUser.getBankUserDomicile();
+			//if(bankUserDomicile!=null) { 
+			//	statement.setString(++count, bankUserDomicile.getName());
+			//}else {
+			//	statement.setString(++count, null);
+			//}
+			 
 			BankUserDomicile bankUserDomicile = bankUser.getBankUserDomicile();
 			if(bankUserDomicile!=null) {
-				statement.setString(++count, bankUserDomicile.getName());
+				statement.setInt(++count, bankUserDomicile.getId());
 			}else {
-				statement.setString(++count, null);	
+				//statement.setInt(++count, null); // compiler error
+				statement.setNull(++count, java.sql.Types.NULL);
+			}			
+			BankAccount bankAccount = bankUser.getBankAccount();
+			if(bankAccount!=null) {
+				statement.setInt(++count, bankAccount.getId());
+			}else {
+				//statement.setInt(++count, null); // compiler error
+				statement.setNull(++count, java.sql.Types.NULL);
 			}
+			
+			//==============================================================
+			// end: map database Foreign Key(s) to objects in OOP
+			//==============================================================
 			
 			statement.execute();
 			
