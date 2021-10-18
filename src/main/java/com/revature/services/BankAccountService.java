@@ -15,7 +15,7 @@ public class BankAccountService {
 
 	private BankAccountDAO bankAccountDao = new BankAccountDAOImpl();
 	
-	  public List<BankAccount> findAllLedgers(){ //return bankAccountDao.findAll();
+	  public List<BankAccount> displayAllLedgers(){ //return bankAccountDao.findAll();
 	  return bankAccountDao.getAllBankAccounts(); }
 	 
 

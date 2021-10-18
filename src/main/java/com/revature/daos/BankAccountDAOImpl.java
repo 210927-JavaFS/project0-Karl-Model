@@ -33,17 +33,18 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 	@Override
 	public List<BankAccount> getAllBankAccounts() {			
 		try(Connection conn = BankConnectionUtil.getConnection()){ //try-with-resources 
-			String sql = "SELECT * FROM bankuseraccounts;";
-			Statement s = conn.createStatement();
-			ResultSet rs = s.executeQuery(sql);
+			String sql = "SELECT * FROM bankuseraccount;";
+			Statement statement = conn.createStatement();
+			ResultSet result = statement.executeQuery(sql);
 			List<BankAccount> bankAccountList = new ArrayList<>();
-			while(rs.next()) {
-				BankAccount b = new BankAccount();
+			while(result.next()) {
+				BankAccount bankAccount = new BankAccount();
 				
-				int bankAccountId = rs.getInt("account_number");
-				b.setId(bankAccountId);
+				bankAccount.setId(result.getInt("account_id"));
+				bankAccount.setBalance(result.getFloat("account_balance")); 
+				bankAccount.setUserId(result.getInt("account_id")); // note: user_id is not a field in bankuseraccount
 				
-				bankAccountList.add(b);
+				bankAccountList.add(bankAccount);
 			}
 			return bankAccountList;
 		//} catch (IOException e) {
@@ -68,56 +69,76 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		int createdBankAccounts = 0;
 		
 		try(Connection conn = BankConnectionUtil.getConnection()){ //try-with-resources
-			String sql = "INSERT INTO bankuseraccounts (user_ss) VALUES (?);";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, bankAccount.getUserId());
-			//ResultSet result = ps.executeQuery();
-			//BankAccount bankAccount = new BankAccount;
-			ps.execute();
-			if (createdBankAccounts > 0) {
-				log.info("your bank account has been successfully created");
-			}
-			return 1;
-		//} catch (SQLException|IOException e) {
-		//	log.error(e.getMessage());
-		//}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;	
-	}
-	
-	public int createBankAccount(int userId) {
-		int createdBankAccounts = 0;
-		
-		try(Connection conn = BankConnectionUtil.getConnection()){ //try-with-resources
-			String sql = "INSERT INTO bankuseraccounts (user_ss) VALUES (?);";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, userId);
-			createdBankAccounts = ps.executeUpdate();
-			//createdBankAccounts = ps.execute();
-		//} catch (SQLException|IOException e) {
-		//	log.error(e.getMessage());
-		//}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
+			String sql = "INSERT INTO bankuseraccount (balance, user_id) "
+					+ "VALUES (?,?);";
 			
+			int count = 0;
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			//statement.setString(++count, bankAccount.getId()); // commented out to allow SERIALIZE constraint to create Primary Key in database via SQL
+			statement.setFloat(++count, bankAccount.getBalance()); 
+			statement.setInt(++count, bankAccount.getUserId()); // note: user_id is not a field in bankuseraccount			
+			
+			statement.execute();
+			
+			//return true;
+			return 1;
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
 		if (createdBankAccounts > 0) {
 			log.info("your bank account has been successfully created!");
 		}
 		
-		return createdBankAccounts;
+		//return false;
+		return 0;
+	}
+	
+	public int createBankAccount(int userId) { // deprecate unnecessary method?
+		int createdBankAccounts = 0;
+		
+		try(Connection conn = BankConnectionUtil.getConnection()){ //try-with-resources
+			String sql = "INSERT INTO bankuseraccount (balance, user_id) " // toDo: implement SQL statement specific to userId or simply account id (first case requires a JOIN because userId is not a field in table bankuseraccount)
+					+ "VALUES (?,?);";
+			
+			int count = 0;
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			BankAccount bankAccount = new BankAccount();
+			
+			//statement.setString(++count, bankAccount.getId()); // commented out to allow SERIALIZE constraint to create Primary Key in database via SQL
+			statement.setFloat(++count, bankAccount.getBalance()); 
+			statement.setInt(++count, bankAccount.getUserId()); // note: user_id is not a field in bankuseraccount			
+			
+			statement.execute();
+			
+			//return true;
+			return 1;
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (createdBankAccounts > 0) {
+			log.info("your bank account has been successfully created!");
+		}
+		
+		//return false;
+		return 0;
 	}
 	
 	@Override
-	public BankAccount getBankAccountByUserId(int id) {
+	public BankAccount getBankAccountByUserId(int id) { // temporary hack: ambiguous method name (toDo: refactor or clone)
 		//BankAccount bankAccount = null;
 		//ResultSet rs = null;
 		//String sql = "SELECT * FROM bankuseraccounts WHERE account_number = ?;";
 		
 		try(Connection conn = BankConnectionUtil.getConnection()){ //try-with-resources
-			String sql = "SELECT * FROM bankuseraccounts WHERE account_number = ?;";	
+			String sql = "SELECT * FROM bankuseraccount WHERE account_id = ?;";	
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
@@ -132,9 +153,9 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 			//}
 			
 			if(rs.next()) {
-				bankAccount.setId(rs.getInt("account_number"));
+				bankAccount.setId(rs.getInt("account_id"));
 				bankAccount.setBalance(rs.getFloat("account_balance"));
-				bankAccount.setUserId(rs.getInt("user_ss"));
+				bankAccount.setUserId(rs.getInt("account_id")); // note: user_id is not a field in bankuseraccount
 			}
 			
 			return bankAccount;
@@ -199,7 +220,7 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		float balance = 0;
 		
 		try(Connection conn = BankConnectionUtil.getConnection()){ //try-with-resources
-			String sql = "SELECT account_balance FROM bankuseraccounts WHERE user_ss = ?;"; // toDo: replace user_ss with user_id (a PK distinct from user_name)
+			String sql = "SELECT account_balance FROM bankuseraccount WHERE user_id = ?;"; // toDo: replace with a JOIN statement (because user_id is not a field in bankaccount)
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
@@ -244,7 +265,7 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		float balance = 0;
 		
 		try(Connection conn = BankConnectionUtil.getConnection()){ //try-with-resources
-			String sql = "SELECT account_balance FROM bankuseraccounts WHERE account_number = ?;";
+			String sql = "SELECT account_balance FROM bankuseraccount WHERE account_id = ?;";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();

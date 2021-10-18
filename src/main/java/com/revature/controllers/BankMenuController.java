@@ -1,11 +1,17 @@
 package com.revature.controllers;
 
 import java.util.Scanner;
+
+import com.revature.services.BankUserService;
+//import com.revature.services.BankUserDomicileService;
+import com.revature.services.BankAccountService;
 import com.revature.utils.UserInputValidation;
 
 public class BankMenuController {
 	
 	private static Scanner scan = new Scanner(System.in);
+	private static BankAccountController bankAccountController = new BankAccountController(); // toDo
+	//private BankAccountService bankAccountService= new BankAccountService(); // temporary for testing only
 	private static BankUserDomicileController bankUserDomicileController = new BankUserDomicileController();
 	private static BankUserController bankUserController = new BankUserController();
 
@@ -197,10 +203,11 @@ public class BankMenuController {
 		System.out.println("What would you like to do? \n"
 				+"1) View/Edit Customer Identity Information \n"
 				+"2) View/Edit Customer Residential Informmation \n"
-				+"3) Exit the application");
+				+"3) View/Edit Customer Financial Information \n"
+				+"4) Exit the application");
 		String response = scan.nextLine();
 		
-		while(!response.equals("3")) {
+		while(!response.equals("4")) {
 			switch (response) {
 				case "1":
 					// TODO call menu
@@ -208,7 +215,8 @@ public class BankMenuController {
 					System.out.println("What would you like to do? \n"
 							+"1) View/Edit Customer Identity Information \n"
 							+"2) View/Edit Customer Residential Informmation \n"
-							+"3) Exit the application");
+							+"3) View/Edit Customer Financial Information \n"
+							+"4) Exit the application");
 					response = scan.nextLine();
 					break;
 				case "2":
@@ -216,8 +224,18 @@ public class BankMenuController {
 					System.out.println("What would you like to do? \n"
 							+"1) View/Edit Customer Identity Information \n"
 							+"2) View/Edit Customer Residential Informmation \n"
-							+"3) Exit the application");
-					response = scan.nextLine();			
+							+"3) View/Edit Customer Financial Information \n"
+							+"4) Exit the application");
+					response = scan.nextLine();
+				case "3":					
+					financialsMenu();
+					System.out.println("What would you like to do? \n"
+							+"1) View/Edit Customer Identity Information \n"
+							+"2) View/Edit Customer Residential Informmation \n"
+							+"3) View/Edit Customer Financial Information \n"
+							+"4) Exit the application");
+					response = scan.nextLine();
+					break;					
 			}
 		}
 		
@@ -332,5 +350,59 @@ public class BankMenuController {
 			}
 		}
 	}
+	
+	private void financialsMenu() {
+		System.out.println("View/Edit Customer Financial Information: \n"
+				+ "1) Show all Accounts \n"
+				+ "2) Show one Account \n"
+				+ "3) Add an Account to the database \n"
+				+ "4) Return to previous menu.");
+		String response = scan.nextLine();
+		
+		while(!response.equals("4")) {
+			switch (response) {
+				case "1":
+					bankAccountController.displayAllLedgers();
+					System.out.println("View/Edit Customer Financial Information: \n"
+							+ "1) Show all Accounts \n"
+							+ "2) Show one Account \n"
+							+ "3) Add an Account to the database \n"
+							+ "4) Return to previous menu.");
+					response = scan.nextLine();
+					break;
+				case "2":
+					System.out.println("What is the Account's id number?");
+					Integer id = Integer.parseInt(scan.nextLine());
+					bankAccountController.displayOneLedger(id);
+					
+					System.out.println("View/Edit Customer Financial Information: \n"
+							+ "1) Show all Accounts \n"
+							+ "2) Show one Account \n"
+							+ "3) Add an Account to the database \n"
+							+ "4) Return to previous menu.");
+					response = scan.nextLine();
+				case "3":
+					bankAccountController.addLedger();
+					System.out.println("View/Edit Customer Financial Information: \n"
+							+ "1) Show all Accounts \n"
+							+ "2) Show one Account \n"
+							+ "3) Add an Account to the database \n"
+							+ "4) Return to previous menu.");				
+					response = scan.nextLine();
+					break;
+				case "4":
+					break;					
+				default:
+					System.out.println("That was not a valid input. Please try again.");
+					System.out.println("View/Edit Customer Financial Information: \n"
+							+ "1) Show all Accounts \n"
+							+ "2) Show one Account \n"
+							+ "3) Add a Account to the database \n"
+							+ "4) Return to previous menu.");;					
+					response = scan.nextLine();
+					break;
+			}
+		}
+	}	
 	
 }
