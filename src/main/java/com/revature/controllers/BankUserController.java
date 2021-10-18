@@ -1,19 +1,23 @@
 package com.revature.controllers;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import com.revature.models.BankUser;
-//import com.revature.models.BankUserDomicile;
-//import com.revature.models.BankAccount;
+import com.revature.models.BankUserDomicile;
+import com.revature.models.BankAccount;
 import com.revature.services.BankUserService;
-//import com.revature.services.BankUserService;
-//import com.revature.services.BankUserDomicileService;
-//import com.revature.services.BankAccountService;
+import com.revature.services.BankUserDomicileService;
+import com.revature.services.BankAccountService;
+import com.revature.utils.IcePwd;
 
 public class BankUserController {
 
 	private BankUserService bankUserService = new BankUserService();
+	private BankUserDomicileService bankUserDomicileService = new BankUserDomicileService();
+	private BankAccountService bankAccountService = new BankAccountService();
+	
 	private Scanner scan = new Scanner(System.in);
 	
 	public void displayAllCustomers() {
@@ -31,6 +35,67 @@ public class BankUserController {
 		//ToDo: exclude Non-Customers
 		System.out.println(bankUser);
 	}
+	
+
+	/*
+	public void addAccount() {
+		float accountBalance = 0.00;
+		System.out.println("Enter information for new account");
+		System.out.print("Enter your username: ");
+		String username1 = scan.nextLine();
+		String accountType = getAuthority(username1);
+		if (accountType.equals("ADMINISTRATOR") || (accountType.equals("EMPLOYEE") || accountType.equals("ADMIN"))) {
+			System.out.print("Enter your username for account to add: ");
+			String username2 = scan.nextLine();
+			int randomNumber = 100000000 + new Random().nextInt(90000000);
+			String accountNumber = String.valueOf(randomNumber);
+			BankAccount bankAccount = new BankAccount(accountNumber, accountBalance, username2);
+
+			if (bankAccountService.newLedger(bankAccount)) {
+				System.out.println("New user successfully created");
+			} else {
+				System.out.println("Something went wrong. We could not register user. Please contact an admin or employee.");
+			}
+		}
+	}
+	*/
+	
+	/*
+	public void addAccount() {
+		float accountBalance = (float)0.00;
+		System.out.println("Enter information for new account");
+		System.out.print("Enter your username: ");
+		String username1 = scan.nextLine();
+		String accountType = getAuthority(username1);
+		if (accountType.equals("ADMINISTRATOR") || (accountType.equals("EMPLOYEE") || accountType.equals("ADMIN"))) {
+			System.out.print("Enter a user_id number for the new account: ");
+			Integer uid = Integer.parseInt(scan.nextLine());
+			int randomNumber = 100000000 + new Random().nextInt(90000000);
+			Integer accountNumber = randomNumber;
+			BankAccount bankAccount = new BankAccount(accountNumber, accountBalance, uid);
+
+			if (bankAccountService.newLedger(bankAccount)) {
+				System.out.println("New user successfully created");
+			} else {
+				System.out.println("Something went wrong. We could not register user. Please contact an admin or employee.");
+			}
+		}
+	}
+	*/
+	
+	public String getAuthority(String username) {
+		//BankUser bankUser = BankUserService.uRole(username);
+		//return bankUser.getRole();
+		return "CUSTOMER"; // temporary hack
+	} 
+
+	
+	public String getPassphrase(String password) {
+		//BankUser bankUser = BankUserService.uPassword(password);
+		//return bankUser.getPwd();
+		return "password"; // temporary hack		
+	}			
+	
 
 	public void addPerson() {
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
@@ -46,9 +111,12 @@ public class BankUserController {
 		String userName = scan.nextLine();		
 		System.out.println("What is your password?");
 		String pwd = scan.nextLine();
-		// start: toDo- encryption
+		// start: basic encryption
+		String encPassword = IcePwd.passwordEncryption(pwd);
+		// end: basic encryption
+		// start: toDo- stronger encryption
 		String salt = "salt";
-		// end: toDo- encryption
+		// end: toDo- stronger encryption
 		System.out.println("What is your first name?");
 		String firstName = scan.nextLine();
 		System.out.println("What is your last name?");

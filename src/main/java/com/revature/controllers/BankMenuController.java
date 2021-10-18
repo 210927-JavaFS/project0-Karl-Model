@@ -3,9 +3,10 @@ package com.revature.controllers;
 import java.util.Scanner;
 
 import com.revature.services.BankUserService;
-//import com.revature.services.BankUserDomicileService;
+import com.revature.services.BankUserDomicileService;
 import com.revature.services.BankAccountService;
 import com.revature.utils.UserInputValidation;
+import com.revature.utils.IcePwd;
 
 public class BankMenuController {
 	
@@ -194,11 +195,11 @@ public class BankMenuController {
 		String userName = scan.nextLine();
 		System.out.print("What is your password?");
 		String pwd = scan.nextLine();
-		//String encPassword = PassEncTech1.passwordEncryption(password);
-		String encPassword = pwd; // temporary hack
-		//String role = getRoles(userName); // toDo: implement method
-		String role = "CUSTOMER"; // temporary hack
-		String checkPwd = getPassphrase(userName);
+		String encPassword = IcePwd.passwordEncryption(pwd);
+		//String encPassword = pwd; // temporary hack
+		String role = bankUserController.getAuthority(userName); // toDo: implement method
+		//String role = "CUSTOMER"; // temporary hack
+		String checkPwd = bankUserController.getPassphrase(userName);
 		if (role.equals("CUSTOMER") && checkPwd.equals(encPassword)) {
 			customerMenu();
 		} else if (role.equals("EMPLOYEE") && checkPwd.equals(encPassword)) {
@@ -211,18 +212,6 @@ public class BankMenuController {
 		}
 
 	};
-	
-	public String getAuthority(String username) {
-		//BankUser bankUser = BankUserService.uRole(username);
-		//return bankUser.getRole();
-		return "CUSTOMER"; // temporary hack
-	} 
-
-	public String getPassphrase(String password) {
-		//BankUser bankUser = BankUserService.uPassword(password);
-		//return bankUser.getPwd();
-		return "password"; // temporary hack		
-	}	
 	
 	public void customerMenu() {
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
