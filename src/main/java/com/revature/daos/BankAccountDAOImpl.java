@@ -185,10 +185,80 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		return 0;
 	}
 
+	/*
 	@Override
 	public boolean deposit(int id, float balance) {
 		return false;
 	}
+	*/
+
+	/*
+	@Override
+	public BankAccount withdraw(String accountNumber, float withdrawAmount) {
+		try (Connection conn = BankConnectionUtil.getConnection()) {
+			String sql = "SELECT account_balance FROM bankuseraccount WHERE account_id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, accountNumber);
+			ResultSet result = statement.executeQuery();
+			BankAccount bankAccount = new BankAccount();
+			if (result.next()) {
+				bankAccount.setBalance(result.getFloat("account_balance"));
+			}
+
+			if (withdrawAmount < 0) {
+				System.out.println("withdraw may not be negative");
+			} else if (bankAccount.getBalance() <= 0) {
+				System.out.println("Account balance is 0. Withdraw denied");
+			} else {
+				float newBalance = bankAccount.getBalance() - withdrawAmount;
+				String sql2 = "UPDATE account_balance SET account_balance = ? WHERE account_id = ?";
+				PreparedStatement statement2 = conn.prepareStatement(sql2);
+				statement2.setFloat(1, newBalance);
+				statement2.setString(2, accountNumber);
+				statement2.execute();
+			}
+
+			return bankAccount;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	*/
+	
+	@Override
+	public BankAccount withdraw(Integer accountNumber, float withdrawAmount) {
+		try (Connection conn = BankConnectionUtil.getConnection()) {
+			String sql = "SELECT account_balance FROM bankuseraccount WHERE account_id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, accountNumber);
+			ResultSet result = statement.executeQuery();
+			BankAccount bankAccount = new BankAccount();
+			if (result.next()) {
+				bankAccount.setBalance(result.getFloat("account_balance"));
+			}
+
+			if (withdrawAmount < 0) {
+				System.out.println("withdraw may not be negative");
+			} else if (bankAccount.getBalance() <= 0) {
+				System.out.println("Account balance is 0. Withdraw denied");
+			} else {
+				float newBalance = bankAccount.getBalance() - withdrawAmount;
+				String sql2 = "UPDATE account_balance SET account_balance = ? WHERE account_id = ?";
+				PreparedStatement statement2 = conn.prepareStatement(sql2);
+				statement2.setFloat(1, newBalance);
+				statement2.setInt(2, accountNumber);
+				statement2.execute();
+			}
+
+			return bankAccount;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}	
 
 	@Override
 	public void withdraw(int id) {
@@ -214,7 +284,30 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		*/
 	
 	}
-	
+	/*
+	@Override
+	public BankAccount getBalance(String accountNumber) {
+		try (Connection conn = BankConnectionUtil.getConnection()) {
+			String sql = "SELECT account_balance FROM bankuseraccount WHERE account_id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, accountNumber);
+			ResultSet result = statement.executeQuery();
+			BankAccount bankAccount = new BankAccount();
+
+			// statement3.execute();
+			while (result.next()) {
+				bankAccount.SetBalance(result.getFloat("account_balance"));
+			}
+
+			return bankAccount;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	*/
 	public float viewBalanceByUserId(int id) {
 		//ResultSet rs = null;
 		float balance = 0;
@@ -341,4 +434,83 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		*/
 
 	}
+	/*
+	@Override
+	public BankAccount deposit(String accountNumber, float depositAmount) {
+		try (Connection conn = BankConnectionUtil.getConnection()) {
+			String sql = "SELECT account_balance FROM bankuseraccount WHERE account_id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, accountNumber);
+			ResultSet result = statement.executeQuery();
+			BankAccount bankAccount = new BankAccount();
+			if (result.next()) {
+				bankAccount.setBalance(result.getFloat("account_balance"));
+			}
+
+			if (depositAmount < 0) {
+				System.out.println("deposit may not be negative");
+			} else {
+				double newBalance = bankAccount.getBalance() + depositAmount;
+				String sql2 = "UPDATE account_balance SET account_balance = ? WHERE account_id = ?";
+				PreparedStatement statement2 = conn.prepareStatement(sql2);
+				statement2.setDouble(1, newBalance);
+				statement2.setString(2, accountNumber);
+				statement2.execute();
+			}
+
+			return bankAccount;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	*/
+	
+	@Override
+	public BankAccount deposit(Integer accountNumber, float depositAmount) {
+		try (Connection conn = BankConnectionUtil.getConnection()) {
+			String sql = "SELECT account_balance FROM bankuseraccount WHERE account_id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, accountNumber);
+			ResultSet result = statement.executeQuery();
+			BankAccount bankAccount = new BankAccount();
+			if (result.next()) {
+				bankAccount.setBalance(result.getFloat("account_balance"));
+			}
+
+			if (depositAmount < 0) {
+				System.out.println("Cdeposit may not be negative");
+			} else {
+				float newBalance = bankAccount.getBalance() + depositAmount;
+				String sql2 = "UPDATE account_balance SET account_balance = ? WHERE account_id = ?";
+				PreparedStatement statement2 = conn.prepareStatement(sql2);
+				statement2.setFloat(1, newBalance);
+				statement2.setInt(2, accountNumber);
+				statement2.execute();
+			}
+
+			return bankAccount;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/*
+	@Override
+	public BankAccount transfer(String accountNumber1, String accountNumber2, float transferAmount) {
+		BankAccount bankAccount = new BankAccount();
+		withdraw(accountNumber1, transferAmount);
+		deposit(accountNumber2, transferAmount);
+		return bankAccount;	
+	*/
+	
+	@Override
+	public BankAccount transfer(Integer accountNumber1, Integer accountNumber2, float transferAmount) {
+		BankAccount bankAccount = new BankAccount();
+		withdraw(accountNumber1, transferAmount);
+		deposit(accountNumber2, transferAmount);
+		return bankAccount;	
+	}	
+	
 }

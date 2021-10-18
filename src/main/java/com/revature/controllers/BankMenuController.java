@@ -11,7 +11,7 @@ public class BankMenuController {
 	
 	private static Scanner scan = new Scanner(System.in);
 	private static BankAccountController bankAccountController = new BankAccountController(); // toDo
-	//private BankAccountService bankAccountService= new BankAccountService(); // temporary for testing only
+	private BankAccountService bankAccountService = new BankAccountService(); // temporary for testing only
 	private static BankUserDomicileController bankUserDomicileController = new BankUserDomicileController();
 	private static BankUserController bankUserController = new BankUserController();
 
@@ -37,7 +37,10 @@ public class BankMenuController {
 			switch (response) {
 				case "1":
 					// TODO call menu
-					//depositMenu();
+					//System.out.println("What is the Account's id number?");
+					//Integer id = Integer.parseInt(scan.nextLine());
+					//bankAccountService.depositMenu(id);
+					bankAccountService.depositMenu(1, (float)500.00); // temporary hardcode to allow interaction with view, deposit, withdraw, etc. methods
 					System.out.println("What would you like to do? \n"
 							+"1) Deposit Funds \n"
 							+"2) Withdraw Funds \n"
@@ -47,7 +50,10 @@ public class BankMenuController {
 					response = scan.nextLine();
 					break;
 				case "2":
-					//withdrawMenu();
+					//System.out.println("What is the Account's id number?");
+					//Integer id = Integer.parseInt(scan.nextLine());
+					//bankAccountService.withdrawMenu(id);
+					bankAccountService.withdrawMenu(1, (float)200.00); // temporary hardcode to allow interaction with view, deposit, withdraw, etc. methods
 					System.out.println("What would you like to do? \n"
 							+"1) Deposit Funds \n"
 							+"2) Withdraw Funds \n"
@@ -57,7 +63,12 @@ public class BankMenuController {
 					response = scan.nextLine();
 				case "3":
 					// TODO call menu
-					//transferMenu();
+					//System.out.println("What is the Account's id number?");
+					//Integer id = Integer.parseInt(scan.nextLine());
+					//System.out.println("What is the External Account's id number?");
+					//Integer id_out = Integer.parseInt(scan.nextLine());
+					//bankAccountService.transferMenu(id, id_out);
+					bankAccountService.transferMenu(1, 2, (float)100.00); // temporary hardcode to allow interaction with view, deposit, withdraw, etc. methods
 					System.out.println("What would you like to do? \n"
 							+"1) Deposit Funds \n"
 							+"2) Withdraw Funds \n"
