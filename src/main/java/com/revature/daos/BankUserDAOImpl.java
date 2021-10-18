@@ -38,6 +38,7 @@ public class BankUserDAOImpl implements BankUserDAO {
 						result.getString("user_email"),
 						result.getString("user_name"),						
 						result.getString("user_pwd"),
+						result.getString("user_salt"),
 						result.getString("user_first_name"),
 						result.getString("user_last_name"),
 						result.getString("user_role"),
@@ -101,6 +102,7 @@ public class BankUserDAOImpl implements BankUserDAO {
 				bankUser.setEmail(result.getString("user_email"));
 				bankUser.setUserName(result.getString("user_name"));
 				bankUser.setPwd(result.getString("user_pwd"));
+				bankUser.setSalt(result.getString("user_salt"));
 				bankUser.setFirstName(result.getString("user_first_name"));
 				bankUser.setLastName(result.getString("user_last_name"));
 				bankUser.setRole(result.getString("user_role"));
@@ -155,6 +157,7 @@ public class BankUserDAOImpl implements BankUserDAO {
 				bankUser.setEmail(result.getString("user_email"));
 				bankUser.setUserName(result.getString("user_name"));
 				bankUser.setPwd(result.getString("user_pwd"));
+				bankUser.setSalt(result.getString("user_salt"));
 				bankUser.setFirstName(result.getString("user_first_name"));
 				bankUser.setLastName(result.getString("user_last_name"));
 				bankUser.setRole(result.getString("user_role"));
@@ -210,8 +213,11 @@ public class BankUserDAOImpl implements BankUserDAO {
 	public boolean addPerson(BankUser bankUser) {
 		try(Connection conn = BankConnectionUtil.getConnection()){
 			
-			String sql = "INSERT INTO bankuseridentity (user_email, user_name, user_pwd, user_first_name, user_last_name, user_role, user_profile_done, user_profile_approved, home_id, account_id) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?);";		
+//			String sql = "INSERT INTO bankuseridentity (user_email, user_name, user_pwd, user_salt, user_first_name, user_last_name, user_role, user_profile_done, user_profile_approved, home_id, account_id) "
+//					+ "VALUES (?,?,?,?,?,?,?,?,?,?);";
+			
+			String sql = "INSERT INTO bankuseridentity (user_email, user_name, user_pwd, user_salt, user_first_name, user_last_name, user_role, user_profile_done, user_profile_approved) "
+					+ "VALUES (?,?,?,?,?,?,?,?);";			
 			
 			int count = 0;
 			
@@ -221,6 +227,7 @@ public class BankUserDAOImpl implements BankUserDAO {
 			statement.setString(++count, bankUser.getEmail());
 			statement.setString(++count, bankUser.getUserName());
 			statement.setString(++count, bankUser.getPwd());
+			statement.setString(++count, bankUser.getSalt());
 			statement.setString(++count, bankUser.getFirstName());
 			statement.setString(++count, bankUser.getLastName());
 			statement.setString(++count, bankUser.getRole());
@@ -231,7 +238,7 @@ public class BankUserDAOImpl implements BankUserDAO {
 			//==============================================================
 			// start: map database Foreign Key(s) to objects in OOP
 			//==============================================================
-			
+			/*
 			//BankUserDomicile bankUserDomicile = bankUser.getBankUserDomicile();
 			//if(bankUserDomicile!=null) { 
 			//	statement.setString(++count, bankUserDomicile.getName());
@@ -253,7 +260,7 @@ public class BankUserDAOImpl implements BankUserDAO {
 				//statement.setInt(++count, null); // compiler error
 				statement.setNull(++count, java.sql.Types.NULL);
 			}
-			
+			*/
 			//==============================================================
 			// end: map database Foreign Key(s) to objects in OOP
 			//==============================================================

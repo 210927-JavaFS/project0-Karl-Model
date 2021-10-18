@@ -4,20 +4,22 @@
 DROP TABLE IF EXISTS bankuseridentity CASCADE;
 DROP TABLE IF EXISTS bankuseraddress CASCADE;
 DROP TABLE IF EXISTS bankuseraccount CASCADE;
---DROP TABLE IF EXISTS bankuserjointaccount CASCADE;
 
+/*
 CREATE TABLE bankuseridentity (
 	user_id SERIAL PRIMARY KEY,
 	user_email VARCHAR(50) UNIQUE NOT NULL,
+	user_name VARCHAR(50) UNIQUE NOT NULL,
 	user_pwd VARCHAR(30) NOT NULL,
 	user_first_name VARCHAR(25),
 	user_last_name VARCHAR(25),
 	user_role VARCHAR(50) NOT NULL,
-	user_ss NUMERIC(9,0) UNIQUE NOT NULL,
 	user_profile_done BOOLEAN,
 	user_profile_approved BOOLEAN
+	--home_id INTEGER REFERENCES bankuseraddress(home_id)
+	--account_id INTEGER REFERENCES bankuseraccount(account_id)
 );
-
+*/
 
 CREATE TABLE bankuseraddress (
 	home_id SERIAL PRIMARY KEY,
@@ -28,8 +30,6 @@ CREATE TABLE bankuseraddress (
 	home_region VARCHAR(50),
 	home_zip VARCHAR(15),
 	home_country VARCHAR(20),
-	user_email VARCHAR(50) REFERENCES bankuseridentity(user_email) UNIQUE NOT NULL,
-	user_ss NUMERIC(9,0) REFERENCES bankuseridentity(user_ss) UNIQUE NOT NULL,
 	home_profile_done BOOLEAN,
 	home_profile_approved BOOLEAN
 );
@@ -40,58 +40,134 @@ CREATE TABLE bankuseraccount (
 	account_transact_prev NUMERIC(8,2),
 	account_type INTEGER,
 	account_holders_qty INTEGER,
-	user_email VARCHAR(50) REFERENCES bankuseridentity(user_email) UNIQUE NOT NULL,
-	user_ss NUMERIC(9,0) REFERENCES bankuseridentity(user_ss) UNIQUE NOT NULL,
 	account_profile_done BOOLEAN,
 	account_approved BOOLEAN,
 	account_deleted BOOLEAN
 );
 
 /*
-CREATE TABLE bankuserjointaccount (
-	account_id SERIAL PRIMARY KEY,
-	account_balance NUMERIC(8,2),
-	account_transact_prev NUMERIC(8,2),
-	account_type INTEGER,
-	account_holders_qty INTEGER,
-	user_email VARCHAR(50) REFERENCES bankuseridentity(user_email) UNIQUE NOT NULL,
-	user_ss NUMERIC(9,0) REFERENCES bankuseridentity(user_ss) UNIQUE NOT NULL,
-	user_ss_joint NUMERIC(9,0),
-	account_profile_done BOOLEAN,
-	account_approved BOOLEAN,
-	account_deleted BOOLEAN
+CREATE TABLE bankuseridentity (
+	user_id SERIAL PRIMARY KEY,
+	user_email VARCHAR(50) UNIQUE NOT NULL,
+	user_name VARCHAR(50) UNIQUE NOT NULL,
+	user_pwd VARCHAR(30) NOT NULL,
+	user_first_name VARCHAR(25),
+	user_last_name VARCHAR(25),
+	user_role VARCHAR(50) NOT NULL,
+	user_profile_done BOOLEAN,
+	user_profile_approved BOOLEAN,
+	home_id INTEGER REFERENCES bankuseraddress(home_id) ON UPDATE CASCADE,
+	account_id INTEGER REFERENCES bankuseraccount(account_id) ON UPDATE CASCADE
 );
 */
 
-INSERT INTO bankuseridentity (user_email, user_pwd, user_first_name, user_last_name, user_role, user_ss, user_profile_done, user_profile_approved) 
-	VALUES ('aWatcful@JavaBank.com', 'admin#01', 'Avery', 'Watchful', 'ADMIN', 123456789, true, true),
-	('pHelpful@JavaBank.com', 'emplo#01', 'Patience', 'Helpful', 'EMPLOYEE', 987654321, true, true),
-	('fPockets@Outlook.com', 'custo#01', 'Fuller', 'Pockets', 'CUSTOMER', 024683579, true, true),
-	('zWanders@Outlook.com', 'custo#02', 'Zig', 'Wanders', 'CUSTOMER', 357902468, false, false);
-	--(null, 'custo#03', 'Will', 'Register', 'CUSTOMER', 975386420, false, false); --violation
-	--('wRegister@Outlook.com', 'custo#03', 'Will', 'Register', 'CUSTOMER', 975386420, true, true);
+CREATE TABLE bankuseridentity (
+	user_id SERIAL PRIMARY KEY,
+	user_email VARCHAR(50) UNIQUE NOT NULL,
+	user_name VARCHAR(50) UNIQUE NOT NULL,
+	user_pwd VARCHAR(255) NOT NULL, --for HASHED PASSWORD
+	user_salt VARCHAR(1024), --SALT
+	user_first_name VARCHAR(25),
+	user_last_name VARCHAR(25),
+	user_role VARCHAR(50) NOT NULL,
+	user_profile_done BOOLEAN,
+	user_profile_approved BOOLEAN,
+	home_id INTEGER,
+	account_id INTEGER,
+	CONSTRAINT fk_domicile
+		FOREIGN KEY(home_id)
+			REFERENCES bankuseraddress(home_id)
+			ON UPDATE CASCADE,
+	CONSTRAINT fk_ledger
+	FOREIGN KEY(account_id)
+		REFERENCES bankuseraccount(account_id)
+			ON UPDATE CASCADE
+			
+	--home_id INTEGER REFERENCES bankuseraddress(home_id) ON UPDATE CASCADE,
+	--account_id INTEGER REFERENCES bankuseraccount(account_id) ON UPDATE CASCADE
+);
 
+--ALTER TABLE bankuseridentity ADD COLUMN home_id INTEGER NOT NULL REFERENCES bankuseraddress(home_id);
+--ALTER TABLE bankuseridentity ADD COLUMN account_id INTEGER NOT NULL REFERENCES bankuseraccount(account_id);
 
-INSERT INTO bankuseraddress (home_name, home_number, home_street, home_city, home_region, home_zip, home_country, user_email, user_ss, home_profile_done, home_profile_approved)
-	VALUES ('fuller manor', '100', 'penny lane', 'beverly hills', 'ca', '43210', 'usa', 'fPockets@Outlook.com', 024683579, true, true), --existing customer with approved address
-	('under bridge', '456', 'any road', 'any town', 'me', '01234', 'usa', 'zWanders@Outlook.com', 357902468, true, false); --customer address looks suspicious, lacks administrative approval
-	--('luxo apartments', '789', 'fanny road', 'mountain lakes', 'nj', '07046', 'usa', 'wRegister@Outlook.com', 975386420, true, true); --customer address to be entered after signup and application
+--ALTER TABLE bankuseridentity ADD COLUMN home_id INTEGER REFERENCES bankuseraddress(home_id);
+--ALTER TABLE bankuseridentity ADD COLUMN account_id INTEGER REFERENCES bankuseraccount(account_id);
 
+--ALTER TABLE bankuseridentity ADD COLUMN home_id INTEGER REFERENCES bankuseraddress(home_id) ON DELETE CASCADE ON UPDATE CASCADE;
+--ALTER TABLE bankuseridentity ADD COLUMN account_id INTEGER REFERENCES bankuseraccount(account_id) ON DELETE CASCADE ON UPDATE CASCADE;
 
-INSERT INTO bankuseraccount (account_balance, account_transact_prev, account_type, account_holders_qty, user_email, user_ss, account_profile_done, account_approved, account_deleted)
-	VALUES (1000.00, 0.0, 1, 1, 'fPockets@Outlook.com', 024683579, true, true, false); -- existing customer account
-	--(1.00, 0.0, 1, 1, 'zWanders@Outlook.com', 357902468, true, true, false); --customer account to be entered after approval
-	--(5000.00, 0.0, 1, 1, 'wRegister@Outlook.com', 975386420, true, true, false); --customer account to be entered after approval
+--ALTER TABLE bankuseridentity ADD COLUMN home_id INTEGER REFERENCES bankuseraddress(home_id) ON UPDATE CASCADE;
+--ALTER TABLE bankuseridentity ADD COLUMN account_id INTEGER REFERENCES bankuseraccount(account_id) ON UPDATE CASCADE;	
 
-/*
-INSERT INTO bankuserjointaccount (account_balance, account_transact_prev, account_type, account_holders_qty, user_email, user_ss, user_ss_joint, account_profile_done, account_approved, account_deleted)
-	VALUES (300.00, 0.0, 1, 2, 'fPockets@Outlook.com', 024683579, 987654321, true, true, false); -- existing customer joint account
-	--(10.00, 0.0, 1, 2, 'zWanders@Outlook.com', 357902468, 987654321, true, true, false); --customer joint account to be entered after approval
-	--(5.00, 0.0, 1, 2, 'wRegister@Outlook.com', 975386420, 987654321, true, true, false); --customer joint account to be entered after approval
-*/
+INSERT INTO bankuseridentity (user_email, user_name, user_pwd, user_salt, user_first_name, user_last_name, user_role, user_profile_done, user_profile_approved) 
+	VALUES ('aWatcful@JavaBank.com', 'hawkeye', 'admin#01', 'salt', 'Avery', 'Watchful', 'ADMIN', true, true),
+	('pHelpful@JavaBank.com', 'angel', 'emplo#01', 'salt', 'Patience', 'Helpful', 'EMPLOYEE', true, true),
+	('fPockets@Outlook.com', 'baron', 'custo#01', 'salt', 'Fuller', 'Pockets', 'CUSTOMER', true, true),
+	('zWanders@Outlook.com', 'homeless', 'custo#02', 'salt', 'Zig', 'Wanders', 'CUSTOMER', true, true);
+	--(null, 'procrastinator', 'custo#03', 'salt', 'Will', 'Register', 'CUSTOMER', false, false); --violation
+	--('wRegister@Outlook.com', 'procrastinator', 'custo#03','salt', 'Will', 'Register', 'CUSTOMER', true, true);
+
+INSERT INTO bankuseraddress (home_name, home_number, home_street, home_city, home_region, home_zip, home_country, home_profile_done, home_profile_approved)
+	VALUES ('fuller manor', '100', 'penny lane', 'beverly hills', 'ca', '43210', 'usa', true, true), --existing customer with approved address
+	('under bridge', '456', 'any road', 'any town', 'me', '01234', 'usa', true, false); --customer address looks suspicious, lacks administrative approval
+	--('luxo apartments', '789', 'fanny road', 'mountain lakes', 'nj', '07046', 'usa', true, true); --customer address to be entered after signup and application
+
+INSERT INTO bankuseraccount (account_balance, account_transact_prev, account_type, account_holders_qty, account_profile_done, account_approved, account_deleted)
+	VALUES (1000.00, 0.0, 1, 1, true, true, false); -- existing customer account
+	--(1.00, 0.0, 1, 1, true, true, false); --account to be added via account application procedure
+	--(5000.00, 0.0, 1, 1, true, true, false); --account to be added via account application procedure
 	
+--ALTER TABLE bankuseridentity ADD COLUMN home_id INTEGER REFERENCES bankuseraddress(home_id) ON DELETE CASCADE ON UPDATE CASCADE;
+--ALTER TABLE bankuseridentity ADD COLUMN account_id INTEGER REFERENCES bankuseraccount(account_id) ON DELETE CASCADE ON UPDATE CASCADE;		
+
+UPDATE bankuseridentity SET home_id = bankuseraddress.home_id FROM bankuseraddress WHERE user_name = 'baron';
+UPDATE bankuseridentity SET account_id = bankuseraccount.account_id FROM bankuseraccount WHERE user_name = 'baron';
+
+--Triggers/Functions
+
+ALTER TABLE bankuseraddress ADD COLUMN residents INTEGER;
+
+CREATE OR REPLACE FUNCTION increase_residents() RETURNS TRIGGER AS 
+$$
+BEGIN 
+	UPDATE bankuseraddress SET residents = 
+		(SELECT residents FROM bankuseraddress WHERE NEW.home_id = bnnkuseraddress.home_id)+1 
+		WHERE bankuseraddress.home_id = NEW.home_id;
+		RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER increment_residents AFTER INSERT ON bankuseraddress
+	FOR EACH ROW EXECUTE PROCEDURE increase_residents();
+
+ALTER TABLE bankuseraddress DROP COLUMN IF EXISTS residents CASCADE;
 
 -- start: EXAMPLE SQL SCRIPTS FOR REFERENCE
+
+--Triggers/Functions
+
+--ALTER TABLE homes ADD COLUMN residents INTEGER;
+
+/*
+CREATE OR REPLACE FUNCTION increase_residents() RETURNS TRIGGER AS 
+$$
+BEGIN 
+	UPDATE homes SET residents = 
+		(SELECT residents FROM homes WHERE NEW.home_name = homes.home_name)+1 
+		WHERE homes.home_name = NEW.home_name;
+		RETURN NEW;
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER increment_residents AFTER INSERT ON avengers
+	FOR EACH ROW EXECUTE PROCEDURE increase_residents();
+*/
+
+
+
+
 
 -- week 1 day3 demo: Sublanguages-Constranits.sql
 

@@ -46,6 +46,9 @@ public class BankUserController {
 		String userName = scan.nextLine();		
 		System.out.println("What is your password?");
 		String pwd = scan.nextLine();
+		// start: toDo- encryption
+		String salt = "salt";
+		// end: toDo- encryption
 		System.out.println("What is your first name?");
 		String firstName = scan.nextLine();
 		System.out.println("What is your last name?");
@@ -83,7 +86,7 @@ public class BankUserController {
 			System.out.println("unrecognized value set to False");
 			approved = false;
 		}
-		BankUser bankUser = new BankUser(email, userName, pwd, firstName, lastName, role, done, approved, null, null); // terminal parameter is a null placeholder, intended to represent a Foreign Key in related Tables
+		BankUser bankUser = new BankUser(email, userName, pwd, salt, firstName, lastName, role, done, approved, null, null); // terminal parameter is a null placeholder, intended to represent a Foreign Key in related Tables
 		
 		if(bankUserService.newPerson(bankUser)) {
 			System.out.println("Your Personal Information was successfully submitted");

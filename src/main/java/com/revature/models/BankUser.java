@@ -8,6 +8,7 @@ public class BankUser {
 	private String email;
 	private String userName;
 	private String pwd;
+	private String salt;
 	private String firstName;
 	private String lastName;
 	private String role;
@@ -18,13 +19,14 @@ public class BankUser {
 	
 	// constructors
 	
-	public BankUser(int id, String email, String userName, String pwd, String firstName, String lastName, String role,
+	public BankUser(int id, String email, String userName, String pwd, String salt, String firstName, String lastName, String role,
 			Boolean done, Boolean approved, BankUserDomicile bankUserDomicile, BankAccount bankAccount) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.userName = userName;
 		this.pwd = pwd;
+		this.pwd = salt;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.role = role;
@@ -34,12 +36,13 @@ public class BankUser {
 		this.bankAccount = bankAccount;
 	}
 
-	public BankUser(String email, String userName, String pwd, String firstName, String lastName, String role, Boolean done,
+	public BankUser(String email, String userName, String pwd, String salt, String firstName, String lastName, String role, Boolean done,
 			Boolean approved, BankUserDomicile bankUserDomicile, BankAccount bankAccount) {
 		super();
 		this.email = email;
 		this.userName = userName;
 		this.pwd = pwd;
+		this.salt = salt;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.role = role;
@@ -85,6 +88,14 @@ public class BankUser {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+	
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public String getFirstName() {
@@ -142,6 +153,8 @@ public class BankUser {
 	public void setBankAccount(BankAccount bankAccount) {
 		this.bankAccount = bankAccount;
 	}
+		
+	// override for methods: hashcode() and equals()
 
 	@Override
 	public int hashCode() {
@@ -157,11 +170,10 @@ public class BankUser {
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((pwd == null) ? 0 : pwd.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
-	}	
-	
-	// override for methods: hashcode() and equals()
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -219,6 +231,11 @@ public class BankUser {
 				return false;
 		} else if (!role.equals(other.role))
 			return false;
+		if (salt == null) {
+			if (other.salt != null)
+				return false;
+		} else if (!salt.equals(other.salt))
+			return false;
 		if (userName == null) {
 			if (other.userName != null)
 				return false;
@@ -231,9 +248,10 @@ public class BankUser {
 
 	@Override
 	public String toString() {
-		return "BankUser [id=" + id + ", email=" + email + ", userName=" + userName + ", pwd=" + pwd + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", role=" + role + ", done=" + done + ", approved=" + approved
-				+ ", bankUserDomicile=" + bankUserDomicile + ", bankAccount=" + bankAccount + "]";
+		return "BankUser [id=" + id + ", email=" + email + ", userName=" + userName + ", pwd=" + pwd + ", salt=" + salt
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", role=" + role + ", done=" + done
+				+ ", approved=" + approved + ", bankUserDomicile=" + bankUserDomicile + ", bankAccount=" + bankAccount
+				+ "]";
 	}	
 	
 }
