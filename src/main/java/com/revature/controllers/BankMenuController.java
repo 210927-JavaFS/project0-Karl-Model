@@ -68,6 +68,11 @@ public class BankMenuController {
 					break;
 				case "4":
 					//viewBalanceMenu();
+					//System.out.println("What is the Account's id number?");
+					//Integer id = Integer.parseInt(scan.nextLine());
+					//bankAccountController.displayOneLedger(id);
+					// toDo: validate against user_id to confirm correct and available account
+					bankAccountController.displayOneLedger(1); // temporary hardcode to allow interaction with view, deposit, withdraw, etc. methods
 					System.out.println("What would you like to do? \n"
 							+"1) Deposit Funds \n"
 							+"2) Withdraw Funds \n"
