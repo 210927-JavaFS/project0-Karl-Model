@@ -255,7 +255,7 @@ public class BankMenuController {
 					response = scan.nextLine();
 				case "3":
 					bankUserController.addPerson();
-					System.out.println("View/Edit Customer Residential Information: \n"
+					System.out.println("View/Edit Customer Identity Information: \n"
 							+ "1) Show all Customers \n"
 							+ "2) Show one Customer \n"
 							+ "3) Add a Customer to the database \n"
