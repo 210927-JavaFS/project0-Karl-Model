@@ -12,5 +12,8 @@ public interface BankUserDAO {
 	public BankUser findPerson(int id);
 	public boolean updatePerson(BankUser bankUser);
 	public boolean addPerson(BankUser bankUser);
+	public BankUser getPasscode(String password);
+	public BankUser getAuthcode(String username);
+	public BankUser setAuthcode(String username);
 	
 }

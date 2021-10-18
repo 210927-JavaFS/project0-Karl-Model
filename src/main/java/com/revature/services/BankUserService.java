@@ -23,5 +23,13 @@ public class BankUserService {
 	public boolean newPerson(BankUser bankUser) {
 		return bankUserDao.addPerson(bankUser);
 	}
+	
+	public BankUser uPassword(String password) {
+		return bankUserDao.getPasscode(password);
+	}
+	
+	public BankUser uRole(String username) {
+		return bankUserDao.getAuthcode(username);
+	}	
 
 }

@@ -482,7 +482,7 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 				System.out.println("Cdeposit may not be negative");
 			} else {
 				float newBalance = bankAccount.getBalance() + depositAmount;
-				String sql2 = "UPDATE account_balance SET account_balance = ? WHERE account_id = ?";
+				String sql2 = "UPDATE bankuseraccount SET account_balance = ? WHERE account_id = ?";
 				PreparedStatement statement2 = conn.prepareStatement(sql2);
 				statement2.setFloat(1, newBalance);
 				statement2.setInt(2, accountNumber);

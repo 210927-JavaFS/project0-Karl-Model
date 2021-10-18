@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import com.revature.models.BankUser;
 import com.revature.models.BankUserDomicile;
@@ -14,6 +15,8 @@ import com.revature.models.BankAccount;
 import com.revature.utils.BankConnectionUtil;
 
 public class BankUserDAOImpl implements BankUserDAO {
+	
+	Scanner scan = new Scanner(System.in);
 	
 	private BankUserDomicileDAO bankUserDomicileDao = new BankUserDomicileDAOImpl();
 	private BankAccountDAO bankAccountDao = new BankAccountDAOImpl();
@@ -273,6 +276,68 @@ public class BankUserDAOImpl implements BankUserDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	@Override
+	public BankUser getPasscode(String username) {
+		try (Connection conn = BankConnectionUtil.getConnection()) {
+			String sql = "SELECT user_pwd FROM bankuseridentity WHERE user_name = ?;";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, username);
+			ResultSet result = statement.executeQuery();
+			BankUser bankUser = new BankUser();
+			if (result.next()) {
+				bankUser.setPwd(result.getString("user_pwd"));
+			}
+
+			return bankUser;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public BankUser getAuthcode(String username) {
+		try (Connection conn = BankConnectionUtil.getConnection()) {
+			String sql = "SELECT user_role FROM bankuseridentity WHERE user_name = ?;";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, username);
+			ResultSet result = statement.executeQuery();
+			BankUser bankUser = new BankUser();
+			if (result.next()) {
+				bankUser.setRole(result.getString("user_role"));
+			}
+
+//			System.out.println(user.getRole());
+			return bankUser;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public BankUser setAuthcode(String username) {
+		try (Connection conn = BankConnectionUtil.getConnection()) {
+			String sql = "UPDATE bankuseridentity SET user_role = ? WHERE user_name = ?;";
+			System.out.println("FOR INTERNAL USE ONLY: please assign a role (CUSTOMER, EMPLOYEE, ADMIN)");
+			String role = scan.nextLine();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, role);
+			statement.setString(2, username);
+			ResultSet result = statement.executeQuery();
+			BankUser bankUser = new BankUser();
+			if (result.next()) {
+				bankUser.setRole(result.getString("user_role"));
+			}
+
+			return bankUser;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

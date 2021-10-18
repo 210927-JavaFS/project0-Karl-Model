@@ -40,7 +40,28 @@ public class BankMenuController {
 					//System.out.println("What is the Account's id number?");
 					//Integer id = Integer.parseInt(scan.nextLine());
 					//bankAccountService.depositMenu(id);
-					bankAccountService.depositMenu(1, (float)500.00); // temporary hardcode to allow interaction with view, deposit, withdraw, etc. methods
+//					bankAccountService.depositMenu(1, (float)500.00); // temporary hardcode to allow interaction with view, deposit, withdraw, etc. methods
+
+					
+					System.out.println("Please enter account number for deposit");
+					Integer accountNum3 = Integer.parseInt(scan.nextLine());
+					System.out.println("Please enter the amount to deposit");
+					float depositAmt = scan.nextFloat();
+					scan.nextLine();
+					if (depositAmt < 0) {
+						System.out.println("Deposit must be greater than 0");
+					} else {
+						bankAccountService.depositMenu(accountNum3, depositAmt);
+						bankAccountService.balanceMenu(accountNum3);
+					}
+					System.out.println("\n");
+					
+					
+					//customerMenu();
+					//break;
+					
+					
+					
 					System.out.println("What would you like to do? \n"
 							+"1) Deposit Funds \n"
 							+"2) Withdraw Funds \n"
@@ -145,6 +166,7 @@ public class BankMenuController {
 		
 	}
 
+	/*
 	public void signIn() {
 		//System.out.println("What is your email?");
 		//String email = scan.nextLine();
@@ -165,6 +187,42 @@ public class BankMenuController {
 			employeeMenu();
 		}		
 	}
+	*/
+	
+	public void signIn() {
+		System.out.print("What is your username?");
+		String userName = scan.nextLine();
+		System.out.print("What is your password?");
+		String pwd = scan.nextLine();
+		//String encPassword = PassEncTech1.passwordEncryption(password);
+		String encPassword = pwd; // temporary hack
+		//String role = getRoles(userName); // toDo: implement method
+		String role = "CUSTOMER"; // temporary hack
+		String checkPwd = getPassphrase(userName);
+		if (role.equals("CUSTOMER") && checkPwd.equals(encPassword)) {
+			customerMenu();
+		} else if (role.equals("EMPLOYEE") && checkPwd.equals(encPassword)) {
+			employeeMenu();
+		} else if (role.equals("ADMIN") && checkPwd.equals(encPassword)) {
+			//adminMenu();
+			employeeMenu();
+		} else {
+			System.out.println("Not a registered user");
+		}
+
+	};
+	
+	public String getAuthority(String username) {
+		//BankUser bankUser = BankUserService.uRole(username);
+		//return bankUser.getRole();
+		return "CUSTOMER"; // temporary hack
+	} 
+
+	public String getPassphrase(String password) {
+		//BankUser bankUser = BankUserService.uPassword(password);
+		//return bankUser.getPwd();
+		return "password"; // temporary hack		
+	}	
 	
 	public void customerMenu() {
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
