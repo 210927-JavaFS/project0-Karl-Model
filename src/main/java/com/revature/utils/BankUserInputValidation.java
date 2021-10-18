@@ -12,7 +12,7 @@ import org.slf4j.MDC;
 
 import com.revature.BankDriver;
 
-public class UserInputValidation {
+public class BankUserInputValidation {
 	
 	private static Scanner sc = new Scanner(System.in);
 	//private static final Logger logger = Logger.getLogger(BankDriver.class);

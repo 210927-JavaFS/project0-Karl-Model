@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.revature.services.BankUserService;
 import com.revature.services.BankUserDomicileService;
 import com.revature.services.BankAccountService;
-import com.revature.utils.UserInputValidation;
+import com.revature.utils.BankUserInputValidation;
 import com.revature.utils.IcePwd;
 
 public class BankMenuController {
@@ -195,8 +195,9 @@ public class BankMenuController {
 		String userName = scan.nextLine();
 		System.out.print("What is your password?");
 		String pwd = scan.nextLine();
-		String encPassword = IcePwd.passwordEncryption(pwd);
+		//String encPassword = IcePwd.passwordEncryption(pwd);
 		//String encPassword = pwd; // temporary hack
+		String encPassword = bankUserController.getPassphrase(userName); // temporary hack
 		String role = bankUserController.getAuthority(userName); // toDo: implement method
 		//String role = "CUSTOMER"; // temporary hack
 		String checkPwd = bankUserController.getPassphrase(userName);

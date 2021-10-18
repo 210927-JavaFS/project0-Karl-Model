@@ -21,7 +21,7 @@ import com.revature.BankDriver;
 //import com.revature.main.BankCore;
 import com.revature.models.BankAccount;
 import com.revature.utils.BankConnectionUtil;
-//import com.revature.utils.BankUserInputValidation;
+import com.revature.utils.BankUserInputValidation;
 
 public class BankAccountDAOImpl implements BankAccountDAO {
 	
@@ -245,11 +245,14 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 				System.out.println("Account balance is 0. Withdraw denied");
 			} else {
 				float newBalance = bankAccount.getBalance() - withdrawAmount;
-				String sql2 = "UPDATE account_balance SET account_balance = ? WHERE account_id = ?";
+				String sql2 = "UPDATE bsnkuseraccount SET account_balance = ? WHERE account_id = ?";
 				PreparedStatement statement2 = conn.prepareStatement(sql2);
 				statement2.setFloat(1, newBalance);
 				statement2.setInt(2, accountNumber);
 				statement2.execute();
+				
+				System.out.println("You withdrew $"+withdrawAmount);
+				log.info("You withdrew $" + BankUserInputValidation.floatConfig(withdrawAmount));
 			}
 
 			return bankAccount;
@@ -487,6 +490,9 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 				statement2.setFloat(1, newBalance);
 				statement2.setInt(2, accountNumber);
 				statement2.execute();
+				
+				System.out.println("You deposited $"+depositAmount);
+				log.info("You deposited $" + BankUserInputValidation.floatConfig(depositAmount));
 			}
 
 			return bankAccount;
@@ -510,6 +516,10 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		BankAccount bankAccount = new BankAccount();
 		withdraw(accountNumber1, transferAmount);
 		deposit(accountNumber2, transferAmount);
+		
+		System.out.println("You transfered $"+transferAmount);
+		log.info("You transfered $" + BankUserInputValidation.floatConfig(transferAmount));		
+		
 		return bankAccount;	
 	}	
 	
