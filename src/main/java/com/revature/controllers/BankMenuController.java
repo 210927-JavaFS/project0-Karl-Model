@@ -75,7 +75,27 @@ public class BankMenuController {
 					//System.out.println("What is the Account's id number?");
 					//Integer id = Integer.parseInt(scan.nextLine());
 					//bankAccountService.withdrawMenu(id);
-					bankAccountService.withdrawMenu(1, (float)200.00); // temporary hardcode to allow interaction with view, deposit, withdraw, etc. methods
+//					bankAccountService.withdrawMenu(1, (float)200.00); // temporary hardcode to allow interaction with view, deposit, withdraw, etc. methods
+					
+					
+					System.out.println("Please enter account number for withdraw");
+					Integer accountNum = Integer.parseInt(scan.nextLine());
+					System.out.println("Please enter the amount to withdraw");
+					float withdrawAmt = scan.nextFloat();
+					scan.nextLine();
+					if (withdrawAmt < 0) {
+						System.out.println("Withdraw must be greater than 0");
+					} else {
+						bankAccountService.withdrawMenu(accountNum, withdrawAmt);
+					}
+					System.out.println("\n");
+					
+					
+					//customerMenu();
+					//break;
+					
+					
+					
 					System.out.println("What would you like to do? \n"
 							+"1) Deposit Funds \n"
 							+"2) Withdraw Funds \n"

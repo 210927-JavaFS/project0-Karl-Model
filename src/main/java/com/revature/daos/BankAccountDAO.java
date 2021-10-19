@@ -16,8 +16,8 @@ public interface BankAccountDAO {
 	public BankAccount deposit(Integer accountNumber, float depositAmount);
 	//public BankAccount withdraw(String accountNumber, float withdrawAmount);
 	public BankAccount withdraw(Integer accountNumber, float withdrawAmount);
-	public void withdraw(int id);
-	public void deposit(int id);
+	//public void withdraw(int id);
+	//public void deposit(int id);
 	//public BankAccount transfer(String accountNumber1, String accountNumber2, float transferAmount);
 	public BankAccount transfer(Integer accountNumber1, Integer accountNumber2, float transferAmount);
 	public float viewBalanceByBankAccountId(int id);

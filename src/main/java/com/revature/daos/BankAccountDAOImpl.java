@@ -239,13 +239,26 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 				bankAccount.setBalance(result.getFloat("account_balance"));
 			}
 
-			if (withdrawAmount < 0) {
-				System.out.println("withdraw may not be negative");
-			} else if (bankAccount.getBalance() <= 0) {
-				System.out.println("Account balance is 0. Withdraw denied");
+			// invoke get method
+			float currentBalance = bankAccount.getBalance();
+			//float currentBalance = viewBalanceByBankAccountId(id);
+			
+			// enforce positive values
+			float withdrawAmountToPos = getPositiveDecimalNumber();			
+			
+			// simple validation
+			//if (withdrawAmount < 0) {
+			//	System.out.println("withdraw may not be negative");
+			//} else if (currentBalance <= 0) {
+			
+			if (currentBalance <= 0) {
+				System.out.println("Account balance is 0 or negative. Withdraw denied");
+			} else if (currentBalance - withdrawAmountToPos <= 0) {
+					log.info("You may not overdraw your account. Operation denied.");
+					log.info("");
 			} else {
-				float newBalance = bankAccount.getBalance() - withdrawAmount;
-				String sql2 = "UPDATE bsnkuseraccount SET account_balance = ? WHERE account_id = ?";
+				float newBalance = bankAccount.getBalance() - withdrawAmountToPos;
+				String sql2 = "UPDATE bankuseraccount SET account_balance = ? WHERE account_id = ?";
 				PreparedStatement statement2 = conn.prepareStatement(sql2);
 				statement2.setFloat(1, newBalance);
 				statement2.setInt(2, accountNumber);
@@ -263,6 +276,7 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		return null;
 	}	
 
+	/*
 	@Override
 	public void withdraw(int id) {
 		float currentBalance = viewBalanceByBankAccountId(id);
@@ -273,20 +287,18 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 			log.info("");
 			return;
 		}
-		/*
 		String sql = "{call WITHDRAW(?, ?)}"; //implement WITHDRAW procedure
 		try(Connection conn = BankConnectionUtil.getConnection()){ //try-with-resources
-				CallableStatement cs = conn.prepareCall(sql)) {
+				CallableStatement cs = conn.prepareCall(sql); {
 			cs.setInt(1, id);
 			cs.setFloat(2, balance);
 			cs.execute();
 			log.info("You withdrew $" + UserInputValidation.floatConfig(balance));
 		} catch (SQLException|IOException e) {
 			log.error(e.getMessage());
-		}
-		*/
-	
+		}	
 	}
+	*/
 	/*
 	@Override
 	public BankAccount getBalance(String accountNumber) {
@@ -419,24 +431,24 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		return balance;
 	}
 
+	/*
 	@Override
 	public void deposit(int id) {
 		float amount = getPositiveDecimalNumber();
-		/*
-		String sql = "{call DEPOSIT(?,?)}"; // MAKE STORED PROCEDURE FOR THIS!
+		
+		String sql = "{call DEPOSIT(?,?);"; // MAKE STORED PROCEDURE FOR THIS!
 		try(Connection conn = BankConnectionUtil.getConnection()){ //try-with-resources
-				CallableStatement cs = conn.prepareCall(sql)) {
+				CallableStatement cs = conn.prepareCall(sql); {
 					cs.setInt(1, id);
 					cs.setFloat(2, amount);
 					cs.execute();
-					
-					log.info("Deposited $" + UserInputValidation.floatConfig(amount));
+				}	
+					log.info("Deposited $" + BankUserInputValidation.floatConfig(amount));
 		} catch (SQLException|IOException e) {
 			log.error(e.getMessage());
 		}
-		*/
-
 	}
+	*/
 	/*
 	@Override
 	public BankAccount deposit(String accountNumber, float depositAmount) {
@@ -481,8 +493,9 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 				bankAccount.setBalance(result.getFloat("account_balance"));
 			}
 
+			// simple validation
 			if (depositAmount < 0) {
-				System.out.println("Cdeposit may not be negative");
+				System.out.println("deposit may not be negative");
 			} else {
 				float newBalance = bankAccount.getBalance() + depositAmount;
 				String sql2 = "UPDATE bankuseraccount SET account_balance = ? WHERE account_id = ?";
@@ -511,6 +524,7 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		return bankAccount;	
 	*/
 	
+	/*
 	@Override
 	public BankAccount transfer(Integer accountNumber1, Integer accountNumber2, float transferAmount) {
 		BankAccount bankAccount = new BankAccount();
@@ -521,6 +535,61 @@ public class BankAccountDAOImpl implements BankAccountDAO {
 		log.info("You transfered $" + BankUserInputValidation.floatConfig(transferAmount));		
 		
 		return bankAccount;	
-	}	
+	}
+	*/
+	
+	@Override
+	public BankAccount transfer(Integer accountNumber, Integer accountNumber2, float transferAmount) {
+		try (Connection conn = BankConnectionUtil.getConnection()) {
+			String sql = "SELECT account_balance FROM bankuseraccount WHERE account_id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, accountNumber);
+			ResultSet result = statement.executeQuery();
+			BankAccount bankAccount = new BankAccount();
+			if (result.next()) {
+				bankAccount.setBalance(result.getFloat("account_balance"));
+			}
+
+			// invoke get method
+			float currentBalance = bankAccount.getBalance();
+			//float currentBalance = viewBalanceByBankAccountId(id);
+				
+			// enforce positive values
+			//float withdrawAmountToPos = getPositiveDecimalNumber(); // inappropriate method?
+			
+			float withdrawAmount = transferAmount;
+				
+			// simple validation
+			if (withdrawAmount < 0) {
+				//System.out.println("withdraw may not be negative");
+				System.out.println("Transfer may not be negative");
+			} else if (currentBalance <= 0) {
+				//System.out.println("Account balance is 0 or negative. Withdraw denied");
+				System.out.println("Account balance is 0 or negative. Transfer denied");
+			} else if (currentBalance - withdrawAmount <= 0) {
+					log.info("You may not overdraw your account. Operation denied.");
+					log.info("");
+			} else {
+				float newBalance = bankAccount.getBalance() - withdrawAmount;
+				String sql2 = "UPDATE bankuseraccount SET account_balance = ? WHERE account_id = ?";
+				PreparedStatement statement2 = conn.prepareStatement(sql2);
+				statement2.setFloat(1, newBalance);
+				statement2.setInt(2, accountNumber);
+				statement2.execute();
+					
+				// if withdraw was successful, then deposit to external account
+				deposit(accountNumber2, transferAmount);
+				
+				System.out.println("You transfered $"+transferAmount);
+				log.info("You transfered $" + BankUserInputValidation.floatConfig(transferAmount));	
+			}
+
+			return bankAccount;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}	
 	
 }

@@ -250,3 +250,32 @@
 18:11:49.028 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
 18:11:49.029 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
 18:11:49.029 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+19:24:44.297 [] [main] DEBUG com.revature.BankDriver - application has started
+19:24:44.300 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+19:24:44.301 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+19:24:44.302 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+19:28:06.283 [] [main] DEBUG com.revature.BankDriver - application has started
+19:28:06.286 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+19:28:06.287 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+19:28:06.288 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+19:28:40.325 [anonymous=1] [main] INFO  com.revature.daos.BankAccountDAOImpl - You withdrew $200.00
+19:47:58.405 [] [main] DEBUG com.revature.BankDriver - application has started
+19:47:58.408 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+19:47:58.409 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+19:47:58.410 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+19:49:27.013 [] [main] DEBUG com.revature.BankDriver - application has started
+19:49:27.016 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+19:49:27.017 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+19:49:27.018 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+19:50:06.803 [anonymous=1] [main] INFO  com.revature.daos.BankAccountDAOImpl - You withdrew $12000.00
+19:50:33.634 [anonymous=1] [main] INFO  com.revature.daos.BankAccountDAOImpl - You deposited $100.00
+19:50:33.636 [anonymous=1] [main] INFO  com.revature.daos.BankAccountDAOImpl - You transfered $100.00
+23:51:59.398 [] [main] DEBUG com.revature.BankDriver - application has started
+23:51:59.402 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+23:51:59.403 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+23:51:59.403 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
+23:52:52.448 [anonymous=1] [main] INFO  com.revature.daos.BankAccountDAOImpl - You deposited $3.60
+23:54:28.521 [] [main] DEBUG com.revature.BankDriver - application has started
+23:54:28.524 [anonymous=1] [main] INFO  com.revature.BankDriver - main method starting
+23:54:28.525 [anonymous=1] [main] ERROR com.revature.BankDriver - placeholder for error logging
+23:54:28.526 [anonymous=1] [main] WARN  com.revature.BankDriver - transition to control layer
