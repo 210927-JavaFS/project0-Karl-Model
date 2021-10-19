@@ -216,8 +216,8 @@ public class BankMenuController {
 		System.out.print("What is your password?");
 		String pwd = scan.nextLine();
 		//String encPassword = IcePwd.passwordEncryption(pwd);
-		//String encPassword = pwd; // temporary hack
-		String encPassword = bankUserController.getPassphrase(userName); // temporary hack
+		String encPassword = pwd; // temporary hack
+		//String encPassword = bankUserController.getPassphrase(userName); // temporary hack
 		String role = bankUserController.getAuthority(userName); // toDo: implement method
 		//String role = "CUSTOMER"; // temporary hack
 		String checkPwd = bankUserController.getPassphrase(userName);

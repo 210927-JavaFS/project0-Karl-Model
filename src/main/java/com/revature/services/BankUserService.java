@@ -5,7 +5,7 @@ import java.util.List;
 import com.revature.daos.BankUserDAO;
 import com.revature.daos.BankUserDAOImpl;
 import com.revature.models.BankUser;
-import com.revature.models.BankUserDomicile;
+//import com.revature.models.BankUserDomicile;
 
 public class BankUserService {
 

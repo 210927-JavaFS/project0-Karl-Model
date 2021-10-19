@@ -84,16 +84,44 @@ public class BankUserController {
 	*/
 	
 	public String getAuthority(String username) {
-		//BankUser bankUser = BankUserService.uRole(username);
+		// error "cannot make a static reference to the non-static method" (solution: create 
+		// an instance of the class and then access the non-static members)	
+		//BankUser bankUser = BankUserService.uRole(username); 
 		//return bankUser.getRole();
-		return "CUSTOMER"; // temporary hack
+		
+		// no compiler error		
+		BankUser bankUser = new BankUser(); 
+		//System.out.println("role = "+(String)bankUser.getRole());
+
+		BankUserService bankUserService = new BankUserService();
+		
+		bankUser = bankUserService.uRole(username);
+		
+		//System.out.println("role = "+(String)bankUser.getRole()+" for username "+username);
+		
+		//return "CUSTOMER"; // temporary hack
+		return bankUser.getRole();
 	} 
 
 	
 	public String getPassphrase(String password) {
-		//BankUser bankUser = BankUserService.uPassword(password);
+		// error "cannot make a static reference to the non-static method" (solution: create 
+		// an instance of the class and then access the non-static members)		
+		//BankUser bankUser = BankUserService.uPassword(password); 
 		//return bankUser.getPwd();
-		return "password"; // temporary hack		
+		
+		// no compiler error		
+		BankUser bankUser = new BankUser(); 
+		//System.out.println("role = "+(String)bankUser.getRole());
+
+		BankUserService bankUserService = new BankUserService();
+		
+		bankUser = bankUserService.uPassword(password);
+		
+		//System.out.println("pwd = "+(String)bankUser.getPwd()+" for username "+password);		
+		
+		//return "password"; // temporary hack
+		return bankUser.getPwd();
 	}			
 	
 

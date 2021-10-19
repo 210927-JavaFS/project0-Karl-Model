@@ -3,7 +3,8 @@ package com.revature.daos;
 import java.util.List;
 
 import com.revature.models.BankUser;
-import com.revature.models.BankUserDomicile;
+//import com.revature.models.BankUserDomicile;
+//import com.revature.models.BankAccount;
 
 public interface BankUserDAO {
 	
